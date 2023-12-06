@@ -1,0 +1,300 @@
+body {
+    font-family: "Times New Roman", serif;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+	justify-content: center;
+    color: white;
+}
+
+header {
+    text-align: center;
+    background-color: transparent;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    /*justify-content: center;*/
+    position: relative;
+}
+
+.top-bar {
+    background-color: #2C5697;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Cambiado a 100% para abarcar todo el eje horizontal */
+    height: 200px;
+    z-index: 0; /* Cambiado a un valor menor para enviar al fondo */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-right: 100px;
+    background-color: transparent;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.logo-image {
+    width: 240px;
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.logo-400 {
+    width: 100px; /* Reducido el tamaño a 100px */
+    background-color: transparent; /* Fondo transparente */
+    padding: 5px;
+    border-radius: 5px;
+}
+
+
+.vertical-line {
+    width: 2px;
+    height: 50px;
+    background-color: white;
+    margin: 0 10px;
+}
+
+.horizontal-line {
+    width: 400px;
+    height: 2px;
+    background-color: #E0D000;
+	float: right;
+}
+
+.right-section {
+    float: right;
+    text-align: right;
+    padding-right: 20px;
+    margin-top: 20px;
+    background-color: transparent;
+	z-index: 1;	
+}
+
+.right-section p {
+    font-weight: bold;
+    font-size: 16px;
+    color: #E0D000;
+    margin: 0;
+}
+
+.small-font {
+    font-size: 12px;
+}
+
+
+h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.welcome-bar {
+    background-color: #012959;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.welcome-bar p {
+    font-size: 16px;
+    color: white;
+}
+
+.oscilloscope {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-top: 10px;
+    color: black;
+    font-weight: bold;
+}
+
+.controls label {
+    font-weight: bold;
+    color: black;
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.screen {
+    width: 100%;
+    height: 500px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+    position: relative;
+}
+
+.grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.grid::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg, transparent, transparent 10%, rgba(0, 0, 0, 0.1) 10%, rgba(0, 0, 0, 0.1) 20%);
+    pointer-events: none;
+}
+
+.grid::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(90deg, transparent, transparent 10%, rgba(0, 0, 0, 0.1) 10%, rgba(0, 0, 0, 0.1) 20%);
+    pointer-events: none;
+}
+
+/* Estilos para el plano cartesiano */
+.cartesian-plane {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.axis-x, .axis-y {
+    position: absolute;
+    background-color: transparent;
+}
+
+.axis-x {
+    width: 100%;
+    height: 1px;
+    background-color: #000; /* Color del eje X */
+    left: 0;
+    bottom: 50%; /* Coloca el eje X en el centro vertical */
+    transform: translate(0, 50%);
+}
+
+.axis-y {
+    width: 1px;
+    height: 100%;
+    background-color: #000; /* Color del eje Y */
+    top: 0;
+    right: 50%; /* Coloca el eje Y en el centro horizontal */
+    transform: translate(50%, 0);
+}
+
+/* Puntas de flecha para los ejes */
+.axis-x::before, .axis-y::before, .axis-x::after, .axis-y::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.axis-x::after {
+    border-width: 10px 5px 0; /* Flecha hacia abajo */
+    border-color: #000 transparent transparent transparent;
+	bottom: -250px;
+    left: 295px;
+}
+
+.axis-y::before {
+    border-width: 5px 10px 5px 0; /* Flecha hacia la izquierda */
+    border-color: transparent #000 transparent transparent;
+    top: 245px;
+    right: 290px;
+}
+
+.axis-x::before {
+    border-width: 0 5px 10px; /* Flecha hacia arriba */
+    border-color: transparent transparent #000 transparent;
+    bottom: 240px;
+    left: 295px;
+}
+
+.axis-y::after {
+    border-width: 10px 10px 0px; /* Flecha hacia la derecha */
+    border-color: transparent #000 transparent transparent;
+	transform: rotate(-45deg);
+    top: 250px;
+    right: -300px;
+}
+/* Estilos para los títulos de ejes */
+.axis-title {
+    position: absolute;
+    color: #000; /* Color del texto del título */
+    font-weight: bold;
+    font-size: 16px; /* Tamaño del texto del título */
+}
+
+.axis-x .axis-title {
+    top: 5px; /* Ajusta la posición del título del eje X */
+    right: -25px; /* Centra el título del eje X horizontalmente */
+    transform: translateX(-50%);
+}
+
+.axis-y .axis-title {
+    bottom: 10px; /* Centra el título del eje Y verticalmente */
+    left: -5px; /* Ajusta la posición del título del eje Y */
+    transform: translateY(-50%) rotate(-90deg); /* Rota el título del eje Y */
+}
+/* Estilos para el pie de página */
+.logo-losmejoresparaelmundo {
+    width: 240px;
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.footer {
+    background-color: #B4B4B4; /* Color de fondo del pie de página */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.vertical-line {
+    width: 1px;
+    height: 40px; /* Altura de la línea vertical */
+    background-color: #000; /* Color de la línea vertical */
+    margin: 0 20px; /* Espacio entre la línea vertical y los iconos */
+}
+
+.social-icons a {
+    text-decoration: none;
+    margin-right: 10px; /* Espacio entre los iconos de redes sociales */
+}
+
+.social-icons img {
+    width: 50px; /* Tamaño de los iconos de redes sociales */
+}
