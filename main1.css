@@ -917,6 +917,12 @@ svg.knob-type-a .blink_me,svg.knob-type-b .blink_me {
     font-family: LCD;
     src: url(lcddot_tr.ttf) format("truetype"),url(lcddot_tr.woff) format("woff")
 }
+.container {
+    display: flex;
+    justify-content: space-between; /* Espacio entre generador y multímetro */
+    align-items: flex-start; /* Alinea los items en la parte superior */
+    width: 90%; /* Ajusta el ancho del contenedor según sea necesario */
+}
 
 #function-generator {
     background-size: cover;
@@ -933,13 +939,32 @@ svg.knob-type-a .blink_me,svg.knob-type-b .blink_me {
     grid-template-columns: 45% 55%
 }
 
+#function-multimeter {
+    background-size: cover;
+	width:30%;
+	height:30%;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#fff));
+    background-image: linear-gradient(#fff,#fff);
+    border-radius: 2vw;
+    border-style: solid;
+    box-shadow: 0 .25vw .25vw 0 rgba(0,0,0,.2),0 .25vw 1vw 0 rgba(0,0,0,.19),inset .25vw .25vw 1vw #000;
+    border-color: #010137;
+    margin-top: 4vw;
+    padding: 2vw;
+    display: grid;
+    grid-template-columns: 80% 0%
+}
+
 .display {
     background-color: #8FCAFF;
     width: 100%;
     border-top-left-radius: 1vw;
     border-bottom-left-radius: 1vw;
+	border-top-right-radius: 1vw;
+    border-bottom-right-radius: 1vw;
     padding:2vw
 }
+
 
 .display .input-wrapper {
     display: grid;
@@ -948,7 +973,7 @@ svg.knob-type-a .blink_me,svg.knob-type-b .blink_me {
 }
 
 .display .display-text {
-    font-family: LCD,sans-serif;
+    font-family: Courier New;
     font-size: 1vw;
     line-height: 2;
 }
@@ -988,6 +1013,71 @@ svg.knob-type-a .blink_me,svg.knob-type-b .blink_me {
     -moz-appearance: number-input;
     appearance: number-input
 }
+
+
+.displayM {
+	border-radius: 2vw;
+    border-style: solid;
+    border-color: #010137;
+	box-shadow: 0 .25vw .25vw 0 rgba(0,0,0,.2),0 .25vw 1vw 0 rgba(0,0,0,.19),inset .25vw .25vw 1.5vw #000;
+    background-color: #06A497;/*06A497*/
+    width: 100%;
+    border-top-left-radius: 1vw;
+    border-bottom-left-radius: 1vw;
+	border-top-right-radius: 1vw;
+    border-bottom-right-radius: 1vw;
+    padding:2vw
+}
+
+
+.displayM .input-wrapper {
+    display: grid;
+    grid-template-columns: 2.5vw 7.5vw 2.5vw;
+    grid-column-gap: 2.5vw
+}
+
+.displayM .displayM-text {
+    font-family: Courier New;
+    font-size: 1vw;
+    line-height: 2;
+}
+
+.displayM input,.displayM select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #8FCAFF;
+    border: .1vw solid transparent;
+    padding: .1vw;
+    width: 100%
+}
+
+.displayM select {
+    cursor: pointer
+}
+
+.displayM input[type=number] {
+    text-align: right;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield
+}
+
+.displayM input:hover,.displayM select:hover {
+    border-bottom-color: #FFF
+}
+
+.displayM input:focus,.displayM select:focus {
+    border-color: #545454;
+    border-radius: .3vw
+}
+
+.displayM input[type=number]:focus,.displayM input[type=number]:hover {
+    -webkit-appearance: number-input;
+    -moz-appearance: number-input;
+    appearance: number-input
+}
+
 
 .controls {
     background-color: #BBBDB6;

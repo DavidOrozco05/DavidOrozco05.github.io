@@ -193,172 +193,107 @@
             </div>
         </div>
     </div>
-    <div id="function-generator">
-        <center> <label>Pontificia Universidad Javeriana<br>Simulador de generador de funciones</label> </center>
-		<br><br><br>
-        <div class="display">
-            <form>
-                <div class="input-wrapper">
-                    <label class="display-text">Frecuencia</label>
-                    <input id="frequency-value" class="display-text" type="number" value="400" min="0" step="1" />
-                    <select id="frequency-unit" class="display-text">
-                        <option value="0">Hz</option>
-                        <option value="3">kHz</option>
-                        <option value="6">MHz</option>
-                    </select>
-                </div>
-				
-				<div class="input-wrapper">
-                    <label class="display-text">Amplitud</label>
-                    <input id="amplitude-value" class="display-text" type="number" value="5" min="0" step="0.01" />
-                    <select id="amplitude-unit" class="display-text">
-                        <option value="-3">mVp</option>
-                        <option value="0">Vp</option>
-                    </select>
-                </div>
-				
-                <div class="input-wrapper">
-                    <label class="display-text">Offset</label>
-                    <input id="offset-value" class="display-text" type="number" value="0" step="0.01" />
-                    <select id="offset-unit" class="display-text">
-                        <option value="-3">mVDC</option>
-                        <option value="0">VDC</option>
-                    </select>
-                </div>
-				
-				<div class="input-wrapper">
-                    <label class="display-text">Desfase</label>
-                    <input id="phase-shift-value" class="display-text" type="number" value="0" min="0" max="359" step="1" />
-                    <select id="phase-shift-unit" class="display-text">
-                        <option value="0">°</option>
-                    </select>
-                </div>
-				
-                <div class="input-wrapper">
-                    <label class="display-text">Simetría</label>
-                    <input id="phase-shift-value" class="display-text" type="number" value="0" min="0" max="359" step="1" />
-                    <select id="phase-shift-unit" class="display-text">
-                        <option value="0">%</option>
-                    </select>
-                </div>
-                
-            </form>
-        </div>
-        <div class="controls">
-            <div id="function-selector">
-                <button id="sinus-fun" class="button active" style="color: black;">
-					<svg width="1.5vw" height="1vw" viewBox="0 0 20 15"><path fill="transparent" stroke="#000" d="M1 8c3-7 5.5-7 8.5 0S15 15 18 8"/></svg>
-					Seno
-				</button>
-				<button id="rectangle-fun" class="button" style="color: black;">
-					<svg width="1.5vw" height="1vw" viewBox="0 0 20 12"><path fill="transparent" stroke="#000" d="M0 8V0h8v8h8V0"/></svg>
-					Cuadrada
-				</button>
-				<button id="triangle-fun" class="button" style="color: black;">
-					<svg width="1.5vw" height="1vw" viewBox="0 0 30 12"><path fill="transparent" stroke="#000" d="M0 8l6-8 6 8 6-8 6 8"/></svg>
-					Triángulo
-				</button>
-				<button id="saw-tooth-fun" class="button" style="color: black;">
-                    <svg width="1.5vw" height="1vw" viewBox="0 0 20 12"><path fill="transparent" stroke="#000" d="M0 8l8-8v8l8-8v8"/></svg>
-                    Rampa  
-                </button>
+    <div class="container">
+        <div id="function-generator">
+            <center>
+                <label>Pontificia Universidad Javeriana<br>Simulador de generador de funciones</label>
+            </center>
+            <br><br><br>
+            <div class="display">
+                <form>
+                    <div class="input-wrapper">
+                        <label class="display-text">Frecuencia</label>
+                        <input id="frequency-value" class="display-text" type="number" value="400" min="0" step="1" />
+                        <select id="frequency-unit" class="display-text">
+                            <option value="0">Hz</option>
+                            <option value="3">kHz</option>
+                            <option value="6">MHz</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label class="display-text">Amplitud</label>
+                        <input id="amplitude-value" class="display-text" type="number" value="5" min="0" step="0.01" />
+                        <select id="amplitude-unit" class="display-text">
+                            <option value="-3">mVp</option>
+                            <option value="0">Vp</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label class="display-text">Offset</label>
+                        <input id="offset-value" class="display-text" type="number" value="0" step="0.01" />
+                        <select id="offset-unit" class="display-text">
+                            <option value="-3">mVDC</option>
+                            <option value="0">VDC</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label class="display-text">Desfase</label>
+                        <input id="phase-shift-value" class="display-text" type="number" value="0" min="0" max="359" step="1" />
+                        <select id="phase-shift-unit" class="display-text">
+                            <option value="0">°</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <label class="display-text">Simetría</label>
+                        <input id="symmetry-value" class="display-text" type="number" value="0" min="0" max="100" step="1" />
+                        <select id="symmetry-unit" class="display-text">
+                            <option value="0">%</option>
+                        </select>
+                    </div>
+                </form>
             </div>
-            <div id="channels">
-                <div id="channels-outputs" class="row-wrapper">
-                    <div id="fun-channel-ch1" class="channel"></div>
-                    <div id="fun-channel-ch2" class="channel"></div>
-                    <div id="fun-channel-ch3" class="channel"></div>
+            <div class="controls">
+                <div id="function-selector">
+                    <button id="sinus-fun" class="button active" style="color: black;">
+                        <svg width="1.5vw" height="1vw" viewBox="0 0 20 15"><path fill="transparent" stroke="#000" d="M1 8c3-7 5.5-7 8.5 0S15 15 18 8"/></svg>
+                        Seno
+                    </button>
+                    <button id="rectangle-fun" class="button" style="color: black;">
+                        <svg width="1.5vw" height="1vw" viewBox="0 0 20 12"><path fill="transparent" stroke="#000" d="M0 8V0h8v8h8V0"/></svg>
+                        Cuadrada
+                    </button>
+                    <button id="triangle-fun" class="button" style="color: black;">
+                        <svg width="1.5vw" height="1vw" viewBox="0 0 30 12"><path fill="transparent" stroke="#000" d="M0 8l6-8 6 8 6-8 6 8"/></svg>
+                        Triángulo
+                    </button>
+                    <button id="saw-tooth-fun" class="button" style="color: black;">
+                        <svg width="1.5vw" height="1vw" viewBox="0 0 20 12"><path fill="transparent" stroke="#000" d="M0 8l8-8v8l8-8v8"/></svg>
+                        Rampa
+                    </button>
                 </div>
-                <div id="channels-button" class="row-wrapper">
-                    <button id="fun-ch1" class="button active" style="color: black;">CH1</button>
-                    <button id="fun-ch2" class="button" style="color: black;">CH2</button>
-                    <button id="fun-ch3" class="button" style="color: black;">SYNC</button>
+                <div id="channels">
+                    <div id="channels-outputs" class="row-wrapper">
+                        <div id="fun-channel-ch1" class="channel"></div>
+                        <div id="fun-channel-ch2" class="channel"></div>
+                        <div id="fun-channel-ch3" class="channel"></div>
+                    </div>
+                    <div id="channels-button" class="row-wrapper">
+                        <button id="fun-ch1" class="button active" style="color: black;">CH1</button>
+                        <button id="fun-ch2" class="button" style="color: black;">CH2</button>
+                        <button id="fun-ch3" class="button" style="color: black;">SYNC</button>
+                    </div>
                 </div>
+            </div>
+        </div>
+
+        <div id="function-multimeter">
+            <center> <label>Pontificia Universidad Javeriana<br>Simulador de Multímetro</label></center>
+            <br><br><br>
+            <div class="displayM">
+                <form>
+					<center>
+					<label class="displayM-text">Periodo: <span id="display-period">0.000000</span> s</label><br> 
+                    <label class="displayM-text">Voltaje RMS_AC: <span id="display-rms-voltage">0.00</span> V</label><br>
+					<label class="displayM-text">Voltaje RMS_DC: <span id="display-offset">0.00</span> V</label><br>
+                    <label class="displayM-text">Voltaje RMS_TOTAL: <span id="display-rms-total-voltage">0.00</span> V</label>
+					<p>F: <span id="display-frequency">0</span> Hz, A: <span id="display-amplitude">0</span> V, D: <span id="display-phaseshift">0</span>°</p>
+					</center>
+                </form>
             </div>
         </div>
     </div>
 	<br><br><br>
-	<!--<div id="function-generator">
-		<center> <label>Pontificia Universidad Javeriana<br>Simulador de generador de funciones</label> </center>
-		<br><br><br>
-        <div class="display">
-            <form>
-                <div class="input-wrapper">
-                    <label class="display-text">Frecuencia</label>
-                    <input id="frequency-value" class="display-text" type="number" value="400" min="0" step="1" />
-                    <select id="frequency-unit" class="display-text">
-                        <option value="0">Hz</option>
-                        <option value="3">kHz</option>
-                        <option value="6">MHz</option>
-                    </select>
-                </div>
-				
-				<div class="input-wrapper">
-                    <label class="display-text">Amplitud</label>
-                    <input id="amplitude-value" class="display-text" type="number" value="5" min="0" step="0.01" />
-                    <select id="amplitude-unit" class="display-text">
-                        <option value="-3">Vp</option>
-                        <option value="0">Vp</option>
-                    </select>
-                </div>
-				
-                <div class="input-wrapper">
-                    <label class="display-text">Offset</label>
-                    <input id="offset-value" class="display-text" type="number" value="0" step="0.01" />
-                    <select id="offset-unit" class="display-text">
-                        <option value="-3">VDC</option>
-                        <option value="0">VDC</option>
-                    </select>
-                </div>
-				
-				<div class="input-wrapper">
-                    <label class="display-text">Simetría</label>
-                    <input id="phase-shift-value" class="display-text" type="number" value="0" min="0" max="359" step="1" />
-                    <select id="phase-shift-unit" class="display-text">
-                        <option value="0">%</option>
-                    </select>
-                </div>
-                
-            </form>
-        </div>
-        <div class="controls">
-            <div id="function-selector">
-                <button id="sinus-fun" class="button active" style="color: black;">
-					<svg width="1.5vw" height="1vw" viewBox="0 0 20 15"><path fill="transparent" stroke="#000" d="M1 8c3-7 5.5-7 8.5 0S15 15 18 8"/></svg>
-					Seno
-				</button>
-				<button id="rectangle-fun" class="button" style="color: black;">
-					<svg width="1.5vw" height="1vw" viewBox="0 0 20 12"><path fill="transparent" stroke="#000" d="M0 8V0h8v8h8V0"/></svg>
-					Cuadrada
-				</button>
-				<button id="triangle-fun" class="button" style="color: black;">
-					<svg width="1.5vw" height="1vw" viewBox="0 0 30 12"><path fill="transparent" stroke="#000" d="M0 8l6-8 6 8 6-8 6 8"/></svg>
-					Triángulo
-				</button>
-				<button id="saw-tooth-fun" class="button" style="color: black;">
-                    <svg width="1.5vw" height="1vw" viewBox="0 0 20 12"><path fill="transparent" stroke="#000" d="M0 8l8-8v8l8-8v8"/></svg>
-                    Rampa  
-                </button>
-            </div>
-            <div id="channels">
-                <div id="channels-outputs" class="row-wrapper">
-                    <!--<div id="fun-channel-ch1" class="channel"></div>-->
-					<!--<div id="fun-channel-ch2" class="channel"></div>
-					<!--<div id="fun-channel-ch3" class="channel"></div>--> 
-                <!--</div>
-                <div id="channels-button" class="row-wrapper">
-                    <!--<button id="fun-ch1" class="button active" style="color: black;">CH1</button>-->
-                    <!--<button id="fun-ch2" class="button" style="color: black;">CH2</button>
-					<!--<button id="fun-ch3" class="button" style="color: black;">SYNC</button>-->
-					
-                    
-                <!--</div>
-            </div>
-        </div>
-    </div> 
 	
-	<br><br><br>
-	-->
 	<div class="footer">
         <div class="javeriana-logo">
                 <img src="losmejoresparaelmundo.png" alt="Logo LosMejoresParaElMundo" class="logo-losmejoresparaelmundo">

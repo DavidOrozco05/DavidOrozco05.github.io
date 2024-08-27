@@ -881,6 +881,35 @@
     Object.defineProperty(e, '__esModule', {
         value: !0
     });
+	
+	function updateDisplayElements(i) {
+		
+		const frequency = i.frequency.value.valueAsNumber || 0;
+		const phaseshift = i.phaseshift.value.valueAsNumber || 0;
+		const amplitude = i.amplitude.value.valueAsNumber || 0;
+		const offset = i.offset.value.valueAsNumber || 0;
+
+		// Mostrar los valores directamente
+		document.getElementById('display-frequency').textContent = frequency;
+		document.getElementById('display-phaseshift').textContent = phaseshift;
+		document.getElementById('display-amplitude').textContent = amplitude;
+		document.getElementById('display-offset').textContent = offset;
+
+		// Calcular el periodo a partir de la frecuencia
+		const period = frequency > 0 ? 1 / frequency : 0;
+		
+		// Calcular Voltaje RMS
+		const rmsVoltage = amplitude / Math.sqrt(2);
+
+		// Calcular Voltaje RMS total con offset	
+		const rmsTotalVoltage = Math.sqrt(rmsVoltage**2 + offset**2);
+
+		// Mostrar los resultados de las operaciones en el HTML
+		document.getElementById('display-period').textContent = period.toFixed(6);
+		document.getElementById('display-rms-voltage').textContent = rmsVoltage.toFixed(2);
+		document.getElementById('display-rms-total-voltage').textContent = rmsTotalVoltage.toFixed(2);
+	}
+
     class i {
         constructor() {
             this.frequency = {
@@ -909,16 +938,20 @@
         }
         registerHandler() {
             const t = ()=>{
-                i.onChange(this.frequency, this.frequencyChangeHandler)
+                i.onChange(this.frequency, this.frequencyChangeHandler);
+				updateDisplayElements(this);
             }
               , e = ()=>{
-                i.onChange(this.phaseshift, this.phaseshiftChangeHandler)
+                i.onChange(this.phaseshift, this.phaseshiftChangeHandler);
+				 updateDisplayElements(this);				
             }
               , n = ()=>{
-                i.onChange(this.amplitude, this.amplitudeChangeHandler)
+                i.onChange(this.amplitude, this.amplitudeChangeHandler);
+				updateDisplayElements(this);
             }
               , r = ()=>{
-                i.onChange(this.offset, this.offsetChangeHandler)
+                i.onChange(this.offset, this.offsetChangeHandler);
+				updateDisplayElements(this);
             }
             ;
             this.frequency.value.onchange = t,
@@ -955,6 +988,7 @@
     }
     e.DisplayControl = i
 }
+
 , function(t, e, n) {
     'use strict';
     Object.defineProperty(e, '__esModule', {
