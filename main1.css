@@ -4,10 +4,6 @@ html {
     -webkit-text-size-adjust: 100%
 }
 
-body {
-    margin: 0
-}
-
 main {
     display: block
 }
@@ -582,7 +578,7 @@ summary {
     position: absolute;
     font-weight: 700;
     font-size: .8vw;
-	z-index: 1;	
+	z-index: 1;
 }
 
 #label-knob-position1 {
@@ -925,8 +921,9 @@ svg.knob-type-a .blink_me,svg.knob-type-b .blink_me {
 }
 
 #function-generator {
+	margin-left: 10%;
     background-size: cover;
-	width: 50%;
+	width: 55%;
     background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#010137));
     background-image: linear-gradient(#fff,#010137);
     border-radius: 2vw;
@@ -941,6 +938,7 @@ svg.knob-type-a .blink_me,svg.knob-type-b .blink_me {
 
 #function-multimeter {
     background-size: cover;
+	margin-left: 6%;
 	width:30%;
 	height:30%;
     background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#fff));
@@ -1020,7 +1018,7 @@ svg.knob-type-a .blink_me,svg.knob-type-b .blink_me {
     border-style: solid;
     border-color: #010137;
 	box-shadow: 0 .25vw .25vw 0 rgba(0,0,0,.2),0 .25vw 1vw 0 rgba(0,0,0,.19),inset .25vw .25vw 1.5vw #000;
-    background-color: #06A497;/*06A497*/
+    background-color: #00B8AC;/*06A497*/
     width: 100%;
     border-top-left-radius: 1vw;
     border-bottom-left-radius: 1vw;
@@ -1040,6 +1038,7 @@ svg.knob-type-a .blink_me,svg.knob-type-b .blink_me {
     font-family: Courier New;
     font-size: 1vw;
     line-height: 2;
+	font-weight: bold;
 }
 
 .displayM input,.displayM select {
@@ -1203,15 +1202,16 @@ button:disabled {
     box-shadow: none
 }
 
-body {
+/*body {
     padding: 1vw;
     background-image: url(background.jpg);
     background-repeat: repeat;
     background-size: 30vw 30vw
-}
+}*/
 
 #device {
-    width: 100%;
+	margin-left: 2%;
+	width: 96%;
     padding-bottom: 43%;
     background-size: cover;
     background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#fff));

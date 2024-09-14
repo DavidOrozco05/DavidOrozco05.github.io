@@ -1,21 +1,4 @@
-body {
-    font-family: "Times New Roman", serif;
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-	justify-content: center;
-    color: white;
-}
 
-header {
-    text-align: center;
-    background-color: transparent;
-    padding: 20px 0;
-    display: flex;
-    align-items: center;
-    /*justify-content: center;*/
-    position: relative;
-}
 
 .top-bar {
     background-color: #2C5697;
@@ -275,13 +258,13 @@ button:hover {
     border-radius: 5px;
 }
 
-.footer {
-    background-color: #B4B4B4; /* Color de fondo del pie de página */
+/*.footer {
+    background-color: #B4B4B4; /* Color de fondo del pie de página 
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-}
+}*/
 
 .vertical-line {
     width: 1px;
