@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIOS - Simulador de Osciloscopio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Estilo para el video de fondo */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        header {
+            display: flex;
+            justify-content: flex-start; /* Alineado a la izquierda */
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.6);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            position: relative;
+            z-index: 10;
+        }
+
+        nav {
+            display: flex;
+            margin-left: 50px;
+            animation: bounceInDown 2s ease;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            padding: 5px;
+        }
+
+        /* Efecto de texto amarillo al seleccionar */
+        nav a.active, nav a:hover {
+            color: #ffd700;
+        }
+
+        .video-with-audio {
+            width: 48%; /* Reducción del 60% (originalmente 80%) */
+            max-width: 480px;
+            margin: 100px auto 20px; /* Espacio superior, entre videos y texto */
+            display: block;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 15vh; /* Ajustado para dejar espacio al video */
+            text-align: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .hero-section p {
+            font-size: 24px;
+            margin-top: 30px;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        /* Botón de simulación estilo burbuja */
+        .explore-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 15px 30px;
+            border: 2px solid rgba(255, 255, 255, 5);
+            border-radius: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            animation: bubbleEffect 4s ease-in-out infinite;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 5;
+            margin-top: 5px; /* Ajusta la distancia entre el texto y el botón */
+        }
+
+        .explore-button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 5px 0; /* Más angosta */
+            background-color: rgba(0, 0, 0, 0.3);
+            font-size: 14px;
+        }
+
+        /* Estilo para la imagen en la derecha */
+        .image-right {
+            position: absolute;
+            right: 300px;
+            top: 0px; /* Ajusta esta propiedad según el lugar donde quieres la imagen */
+            max-width: 10%;
+            z-index: 10;
+            border-radius: 10px; /* Borde redondeado opcional */
+        }
+		.image-right1 {
+            position: absolute;
+            right: 225px;
+            top: 5px; /* Ajusta esta propiedad según el lugar donde quieres la imagen */
+            max-width: 3.5%;
+            z-index: 10;
+            border-radius: 10px; /* Borde redondeado opcional */
+        }
+		.image-left {
+            position: absolute;
+            left: 40px;
+            top: 0px; /* Ajusta esta propiedad según el lugar donde quieres la imagen */
+            max-width: 13%;
+            z-index: 10;
+            border-radius: 10px; /* Borde redondeado opcional */
+        }
+		
+		.vertical-line {
+			width: 2px;
+			height: 50px;
+			background-color: white;
+			margin: 0 530px;
+		}
+
+        /* Animaciones */
+        @keyframes bounceInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(20px);
+            }
+            80% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bubbleEffect {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+        }
+    </style>
+    <script>
+        // Función para manejar la activación del enlace
+        function setActiveLink() {
+            // Eliminar la clase 'active' de todos los enlaces
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            // Añadir la clase 'active' al enlace clicado
+            this.classList.add('active');
+        }
+
+        // Añadir el evento de clic a todos los enlaces de navegación
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', setActiveLink);
+            });
+
+            // Activar el enlace de 'Inicio' por defecto
+            document.querySelector('nav a[href="inicio.html"]').classList.add('active');
+        });
+    </script>
+</head>
+<body>
+
+    <!-- Video de fondo -->
+    <video autoplay muted loop class="video-background">
+        <source src="fondointrocomic3.mp4" type="video/mp4">
+        Tu navegador no soporta videos de fondo.
+    </video>
+
+    <!-- Encabezado con enlaces de navegación -->
+    <header>
+        <h1>HIOS</h1>
+        <nav>
+            <a href="inicio.html" class="active">Inicio</a>
+            <a href="Calibracion1.html">Simulador</a>
+            <a href="Presentacion.html">Acerca de</a>
+            <a href="Contactanos.html">Contáctanos</a>
+        </nav>
+		<!-- Imagen a la derecha -->
+		<img src="logo_javeriana_white.png" alt="Imagen de ejemplo" class="image-right">
+		<img src="logo_400_white.png" alt="Imagen de ejemplo" class="image-right1">
+		
+    </header>
+
+    <!-- Video con audio en el medio -->
+    <video controls class="video-with-audio">
+        <source src="IntroHios.mp4" type="video/mp4">
+        Tu navegador no soporta este video.
+    </video>
+
+    <!-- Sección principal -->
+    <div class="hero-section">
+        <p>Simulador De Osciloscopio Para Estudiantes</p>
+        <!-- Botón de Simulación -->
+        <button class="explore-button" onclick="location.href='Calibracion1.html';">Simulación</button>
+    </div>
+
+    <!-- Pie de página -->
+    <footer>
+		<img src="losmejoresparaelmundo_white.png" alt="Imagen de ejemplo" class="image-left">
+        <p>&copy; 2024 HIOS. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
