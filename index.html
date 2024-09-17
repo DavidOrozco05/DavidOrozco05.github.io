@@ -1,78 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Simulador de Osciloscopio</title>
-	<link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" type="text/css" href="main1.css">
-	
-	<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIOS - Simulador de Osciloscopio</title>
+    <style>
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
             color: #ffffff;
             overflow-x: hidden;
-            text-align: center;
-			background-image: url(background.jpg);
-			background-repeat: repeat;
-        }
-
-        .image-container {
-            margin-top: 20px;
-        }
-
-        .image-container img {
-            width: 35%;
-            height: auto;
-            border: 2px solid transparent;
-        }
-
-        .knob-container {
-            margin-top: 10px;
-        }
-
-        .message {
-            margin-top: 20px;
-            font-weight: bold;
-			
-        }
-
-        input[type="range"] {
-            width: 40%;
-            cursor: pointer;
         }
 
         /* Estilo para el video de fondo */
         .video-background {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			z-index: -2;
-		}
-
-		.overlay {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.6); /* Capa negra con 50% de opacidad */
-			z-index: -1;
-		}
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
 
         header {
             display: flex;
-            justify-content: flex-start;
+            justify-content: flex-start; /* Alineado a la izquierda */
             align-items: center;
             padding: 20px 50px;
             background-color: rgba(0, 0, 0, 0.6);
-			margin-top:0px;
+            position: fixed;
             width: 100%;
             top: 0;
             z-index: 100;
@@ -103,91 +60,48 @@
             padding: 5px;
         }
 
+        /* Efecto de texto amarillo al seleccionar */
         nav a.active, nav a:hover {
             color: #ffd700;
         }
 
-        .image-right {
-            position: absolute;
-            right: 300px;
-            top: 0px;
-            max-width: 10%;
-            z-index: 10;
-            border-radius: 10px;
+        .video-with-audio {
+            width: 48%; /* Reducción del 60% (originalmente 80%) */
+            max-width: 480px;
+            margin: 100px auto 20px; /* Espacio superior, entre videos y texto */
+            display: block;
+            z-index: 1;
+            position: relative;
         }
 
-        .image-right1 {
-            position: absolute;
-            right: 225px;
-            top: 5px;
-            max-width: 3.5%;
-            z-index: 10;
-            border-radius: 10px;
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 15vh; /* Ajustado para dejar espacio al video */
+            text-align: center;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
-        .content {
-            margin-top: 80px;
+        .hero-section p {
+            font-size: 24px;
+            margin-top: 30px;
+            animation: fadeInUp 2s ease-out;
         }
 
-        @keyframes typingEffect {
-            from { width: 0; }
-            to { width: 43.5%; }
-        }
-
-        @keyframes blink {
-            50% { border-color: transparent; }
-        }
-
-        .typed-text {
-            display: inline-block;
-            border-right: 3px solid #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            animation: typingEffect 5s steps(100) 0.5s forwards, blink 0.5s step-end infinite alternate;
-            font-size: 30px;
-            font-weight: bold;
-        }
-
-        .justified-text {
-            margin-top: 0px;
-            text-align: left;
-            width: 60%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .justified-text .note {
-            color: yellow;
-			font-weight: bold;
-        }
-
-        .justified-text .no-compensate {
-            color: red;
-            font-weight: bold;
-			font-size: 20px;
-        }
-
-        .justified-text .yes-compensate {
-            color: #65FF17;
-            font-weight: bold;
-			font-size: 20px;
-        }
-		
-		.justified-text .seleccionar {
-            color: #03A5FF;
-            font-weight: bold;
-        }
-		
-		/* Botón de simulación estilo burbuja */
+        /* Botón de simulación estilo burbuja */
         .explore-button {
             background-color: rgba(255, 255, 255, 0.2);
             color: #ffffff;
             padding: 15px 30px;
-            border: 2px solid rgba(3, 165, 255, 5);
+            border: 2px solid rgba(255, 255, 255, 5);
             border-radius: 50px;
-            font-size: 15px;
+            font-size: 20px;
             cursor: pointer;
+            animation: bubbleEffect 4s ease-in-out infinite;
+            text-transform: uppercase;
             backdrop-filter: blur(10px);
             position: relative;
             z-index: 5;
@@ -195,9 +109,53 @@
         }
 
         .explore-button:hover {
-            background-color: rgba(3, 165, 255, 0.25);
+            background-color: rgba(255, 255, 255, 0.4);
         }
 
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 5px 0; /* Más angosta */
+            background-color: rgba(0, 0, 0, 0.3);
+            font-size: 14px;
+        }
+
+        /* Estilo para la imagen en la derecha */
+        .image-right {
+            position: absolute;
+            right: 300px;
+            top: 0px; /* Ajusta esta propiedad según el lugar donde quieres la imagen */
+            max-width: 10%;
+            z-index: 10;
+            border-radius: 10px; /* Borde redondeado opcional */
+        }
+		.image-right1 {
+            position: absolute;
+            right: 225px;
+            top: 5px; /* Ajusta esta propiedad según el lugar donde quieres la imagen */
+            max-width: 3.5%;
+            z-index: 10;
+            border-radius: 10px; /* Borde redondeado opcional */
+        }
+		.image-left {
+            position: absolute;
+            left: 40px;
+            top: 0px; /* Ajusta esta propiedad según el lugar donde quieres la imagen */
+            max-width: 13%;
+            z-index: 10;
+            border-radius: 10px; /* Borde redondeado opcional */
+        }
+		
+		.vertical-line {
+			width: 2px;
+			height: 50px;
+			background-color: white;
+			margin: 0 530px;
+		}
+
+        /* Animaciones */
         @keyframes bounceInDown {
             0% {
                 opacity: 0;
@@ -240,350 +198,70 @@
                 box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             }
         }
-		footer {
-            width: 110%;
-            text-align: center;
-            padding: 5px 0; /* Más angosta */
-            background-color: rgba(0, 0, 0, 0.8);
-            font-size: 14px;
-			color:green;
-        }
     </style>
     <script>
+        // Función para manejar la activación del enlace
         function setActiveLink() {
+            // Eliminar la clase 'active' de todos los enlaces
             document.querySelectorAll('nav a').forEach(link => {
                 link.classList.remove('active');
             });
+            // Añadir la clase 'active' al enlace clicado
             this.classList.add('active');
         }
 
+        // Añadir el evento de clic a todos los enlaces de navegación
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('nav a').forEach(link => {
                 link.addEventListener('click', setActiveLink);
             });
 
-            document.querySelector('nav a[href="Calibracion1.html"]').classList.add('active');
+            // Activar el enlace de 'Inicio' por defecto
+            document.querySelector('nav a[href="index.html"]').classList.add('active');
         });
     </script>
-</head>	
-    
-
+</head>
 <body>
-	<!--<header>
-        <div class="top-bar"></div> <!-- Franja horizontal #2C5697 
-        <div class="logo-container">
-            <div class="javeriana-logo">
-                <img src="logo_javeriana.png" alt="Logo Javeriana" class="logo-image">
-            </div>
-            <div class="vertical-line"></div>
-            <div class="other-logo">
-                <img src="logo_400.png" alt="Otro Logo" class="logo-400">
-            </div>
-		</div>
-        <h1>Simulador de Osciloscopio Digital</h1>
-		<div class="right-section">
-			<p>Ingeniería Electrónica</p>
-			<div class="horizontal-line"></div>
-			<p>HIOS_HERRAMIENTA INTERACTIVA DE OSCILOSCOPIO</p>
-			<p class="small-font">By: David Santiago Orozco López<br> Jairo Alberto Hurtado Londoño Ph. D.<br> Ing. Alejandro Castro Martínez</p>
-			</div>
-    </header>
-	
-	
-    <div class="welcome-bar">
-        <p>¡Bienvenido al simulador de osciloscopio! Esta herramienta te permite visualizar y analizar señales en tiempo real.</p>
-    </div>
-    <noscript>You need to enable JavaScript to run this app</noscript>
-	<!-- Encabezado con enlaces de navegación -->
+
+    <!-- Video de fondo -->
+    <video autoplay muted loop class="video-background">
+        <source src="fondointrocomic3.mp4" type="video/mp4">
+        Tu navegador no soporta videos de fondo.
+    </video>
+
+    <!-- Encabezado con enlaces de navegación -->
     <header>
         <h1>HIOS</h1>
         <nav>
-            <a href="INICIO.html">Inicio</a>
-            <a href="Calibracion1.html" class="active">Simulador</a>
-            <a href="Presentacion.html">Acerca de</a>
-            <a href="Contactanos.htmlzz">Contáctanos</a>
+            <a href="index.html" class="active">Inicio</a>
+            <a href="compensacion.html">Simulador</a>
+            <a href="acercade.html">Acerca de</a>
+            <a href="contactanos.html">Contáctanos</a>
         </nav>
-        <img src="logo_javeriana_white.png" alt="Imagen de ejemplo" class="image-right">
-        <img src="logo_400_white.PNG" alt="Imagen de ejemplo" class="image-right1">
+		<!-- Imagen a la derecha -->
+		<img src="logo_javeriana_white.png" alt="Imagen de ejemplo" class="image-right">
+		<img src="logo_400_white.png" alt="Imagen de ejemplo" class="image-right1">
+		
     </header>
-	
-	<br>
-		
-    <div id="device">		
-        <div id="display-section">
-		    <div id="display-inlay">
-				<canvas id="display"></canvas>
-				<!-- <div class="cartesian-plane">
-					<div class="axis-x">
-					<div class="axis-title">Tiempo</div> <!-- Título del eje X -->
-					<!-- </div>
-					<div class="axis-y">
-					<div class="axis-title">Voltaje</div> <!-- Título del eje Y -->
-					<!-- </div>
-				</div>-->
-            </div>
-            <!-- <label id="label-power">POWER</label> 
-            <button id="button-power" class="soft-button"></button> -->
-            <button id="button-CH1" class="soft-button">CH1</button>
-            <button id="button-CH2" class="soft-button">CH2</button>
-            <button id="button-DUAL" class="soft-button">DUAL</button>
-            <button id="button-ADD" class="soft-button">SUMA</button>
-            <button id="button-XY" class="soft-button">X/Y</button>
-            <button id="button-COMP" class="soft-button" disabled
-                title="HI">FFT</button>
-            <div id="label-inset"></div>
-        </div>
-        <div id="control-pane">
-		
-			<div id="trigger-pan">
-				<label id="label-trigger">HORIZONTAL</label>
-            </div>
-			<div id="trigger-pa">
-                <label id="label-trigge">VERTICAL</label>
-            </div>
-			
-            <div id="adjust-pane">
-                <label id="label-adjust-adjust" class="label-adjust">ADJUST</label>
-                <button id="button-minus" class="soft-button">-</button>
-                <button id="button-plus" class="soft-button">+</button>
-                <div id="adjust-select-pane">
-                    <label id="label-adjust-intens" class="label-adjust">
-                        <span id="indicator-intens" class="indicator-light"></span>
-                        INTENS
-                    </label>
-                    <label id="label-adjust-focus" class="label-adjust">
-                        <span id="indicator-focus" class="indicator-light"></span>
-                        FOCUS
-                    </label>
-                    <label id="label-adjust-trace" class="label-adjust">
-                        <span id="indicator-trace" class="indicator-light"></span>
-                        TRACE
-                    </label>
-                </div>
-                <label id="label-adjust-select" class="label-adjust">SELECT</label>
-                <button id="button-select" class="soft-button"></button>
-            </div>
-            <div id="label-pane">
-                <label id="label-hm400">Pontificia Universidad Javeriana: Laboratorio de Electrónica</label>
-                <label id="label-40mhz">Simulador de Osciloscopio Digital </label>
-            </div>
-			
-            <label id="label-trigger-norm" class="label-controlpane">AUTO</label>
-            <button id="button-trigger-norm" class="soft-button">NORM</button>
-            <label id="label-trigger-slope" class="label-controlpane">PEND</label>
-            <button id="button-trigger-slope" class="soft-button">
-                <svg xmlns="http://www.w3.org/2000/svg" id="edge-icon" width="3vw" height="1.75vw" version="1.1" viewBox="0 0 3 3" xml:space="preserve"><path fill="none" stroke="#000" stroke-width=".2" d="M.6.5h.65l.5 2h.65"/><path fill="#000" d="M0.70.99h.75l-.375.8z" transform="rotate(-15)"/></svg>
-            </button>
-            <label id="label-trigger-indicator" class="label-controlpane">DISPARO</label>
-            <div id="trigger-indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" id="edge-icon" width="3vw" height="1.75vw" version="1.1" viewBox="0 0 3 3" xml:space="preserve"><path fill="none" stroke="#000" stroke-width=".2" d="M.45 2.5h.8L2 .5h.8"/><!--<path fill="#000" d="M1.55.75h.75l-.375.75z" transform="rotate(-15)"/>--></svg>
-            </div>
-            <!--<label id="label-trigger-xmag" class="label-controlpane">X-MAG</label>
-            <button id="button-trigger-xmag" class="soft-button">x10</button> -->		
-			
-			
-            <label id="label-knob-position1" class="label-controlpane">POSICIÓN</label>
-			<label id="label-knob-position1-1" class="label-controlpane">-</label>
-			<label id="label-knob-position1-2" class="label-controlpane">+</label>
-            <svg xmlns="http://www.w3.org/2000/svg" id="knob-POS1" width="68.031" height="68.031" x="0" y="0" class="knob-type-b" version="1.1" viewBox="0 0 68.031 68.031" xml:space="s"><g id="knob-texture" class="shadow"><circle cx="42.057" cy="6.832" r="3"/><circle cx="47.056" cy="8.845" r="3"/><circle cx="51.584" cy="11.768" r="3"/><circle cx="55.477" cy="15.495" r="3"/><circle cx="58.594" cy="19.891" r="3"/><circle cx="60.822" cy="24.797" r="3"/><circle cx="62.083" cy="30.037" r="3"/><circle cx="62.328" cy="35.421" r="3"/><circle cx="61.55" cy="40.754" r="3"/><circle cx="59.778" cy="45.843" r="3"/><circle cx="57.074" cy="50.504" r="3"/><circle cx="53.536" cy="54.57" r="3"/><circle cx="49.294" cy="57.893" r="3"/><circle cx="44.499" cy="60.353" r="3"/><circle cx="39.325" cy="61.861" r="3"/><circle cx="33.959" cy="62.362" r="3"/><circle cx="28.595" cy="61.839" r="3"/><circle cx="23.428" cy="60.31" r="3"/><circle cx="18.642" cy="57.831" r="3"/><circle cx="14.413" cy="54.491" r="3"/><circle cx="10.892" cy="50.411" r="3"/><circle cx="8.207" cy="45.739" r="3"/><circle cx="6.455" cy="40.643" r="3"/><circle cx="5.699" cy="35.307" r="3"/><circle cx="5.966" cy="29.924" r="3"/><circle cx="7.247" cy="24.69" r="3"/><circle cx="9.495" cy="19.792" r="3"/><circle cx="12.63" cy="15.409" r="3"/><circle cx="16.538" cy="11.697" r="3"/><circle cx="21.077" cy="8.793" r="3"/><circle cx="26.084" cy="6.8" r="3"/><circle cx="31.378" cy="5.791" r="3"/><!--<circle cx="36.767" cy="5.802" r="3"/>--><line x1="36.767" y1="5.802" x2="36.767" y2="0" stroke="red" stroke-width="3"/></g><circle id="rotary-button-POS1" cx="34.016" cy="34.015" r="28.347" class="knob-inlay"/></svg>
-            <span id="tooltip-POS1" class="tooltiptext tpos1"></span>
-			<!--
-            <label id="label-button-save-recall" class="label-controlpane">SAVE</br>RECALL</label>
-            <button id="button-save-recall" disabled title="Einstellungsspeicher nicht verfügbar"
-                class="soft-button">1-s</button>
-            <label id="label-button-autoset" class="label-controlpane">AUTOSET</label>
-            <button id="button-autoset" disabled title="Autoset nicht verfügbar" class="soft-button"></button>-->
-            <label id="label-knob-position2" class="label-controlpane">POSICIÓN</label>
-			<label id="label-knob-position2-1" class="label-controlpane">-</label>
-			<label id="label-knob-position2-2" class="label-controlpane">+</label>
-            <svg xmlns="http://www.w3.org/2000/svg" id="knob-POS2" width="68.031" height="68.031" x="0" y="0" class="knob-type-b" version="1.1" viewBox="0 0 68.031 68.031" xml:space="preserve"><g id="knob-texture"><circle cx="42.057" cy="6.832" r="3"/><circle cx="47.056" cy="8.845" r="3"/><circle cx="51.584" cy="11.768" r="3"/><circle cx="55.477" cy="15.495" r="3"/><circle cx="58.594" cy="19.891" r="3"/><circle cx="60.822" cy="24.797" r="3"/><circle cx="62.083" cy="30.037" r="3"/><circle cx="62.328" cy="35.421" r="3"/><circle cx="61.55" cy="40.754" r="3"/><circle cx="59.778" cy="45.843" r="3"/><circle cx="57.074" cy="50.504" r="3"/><circle cx="53.536" cy="54.57" r="3"/><circle cx="49.294" cy="57.893" r="3"/><circle cx="44.499" cy="60.353" r="3"/><circle cx="39.325" cy="61.861" r="3"/><circle cx="33.959" cy="62.362" r="3"/><circle cx="28.595" cy="61.839" r="3"/><circle cx="23.428" cy="60.31" r="3"/><circle cx="18.642" cy="57.831" r="3"/><circle cx="14.413" cy="54.491" r="3"/><circle cx="10.892" cy="50.411" r="3"/><circle cx="8.207" cy="45.739" r="3"/><circle cx="6.455" cy="40.643" r="3"/><circle cx="5.699" cy="35.307" r="3"/><circle cx="5.966" cy="29.924" r="3"/><circle cx="7.247" cy="24.69" r="3"/><circle cx="9.495" cy="19.792" r="3"/><circle cx="12.63" cy="15.409" r="3"/><circle cx="16.538" cy="11.697" r="3"/><circle cx="21.077" cy="8.793" r="3"/><circle cx="26.084" cy="6.8" r="3"/><circle cx="31.378" cy="5.791" r="3"/><!--<circle cx="36.767" cy="5.802" r="3"/>--><line x1="36.767" y1="5.802" x2="36.767" y2="0" stroke="red" stroke-width="3"/></g><circle id="rotary-button-POS2" cx="34.016" cy="34.015" r="28.347" class="knob-inlay"/></svg>
-            <span id="tooltip-POS2" class="tooltiptext tpos2"></span>
-            <label id="label-knob-triggerlevel" class="label-controlpane">NIVEL</label>
-			<label id="label-knob-triggerlevel-1" class="label-controlpane">-</label>
-			<label id="label-knob-triggerlevel-2" class="label-controlpane">+</label>
-            <svg xmlns="http://www.w3.org/2000/svg" id="knob-TL" width="68.031" height="68.031" x="0" y="0" class="knob-type-b" cursor="ns-resize" version="1.1" viewBox="0 0 68.031 68.031" xml:space="preserve"><g id="knob-texture"><circle cx="42.057" cy="6.832" r="3"/><circle cx="47.056" cy="8.845" r="3"/><circle cx="51.584" cy="11.768" r="3"/><circle cx="55.477" cy="15.495" r="3"/><circle cx="58.594" cy="19.891" r="3"/><circle cx="60.822" cy="24.797" r="3"/><circle cx="62.083" cy="30.037" r="3"/><circle cx="62.328" cy="35.421" r="3"/><circle cx="61.55" cy="40.754" r="3"/><circle cx="59.778" cy="45.843" r="3"/><circle cx="57.074" cy="50.504" r="3"/><circle cx="53.536" cy="54.57" r="3"/><circle cx="49.294" cy="57.893" r="3"/><circle cx="44.499" cy="60.353" r="3"/><circle cx="39.325" cy="61.861" r="3"/><circle cx="33.959" cy="62.362" r="3"/><circle cx="28.595" cy="61.839" r="3"/><circle cx="23.428" cy="60.31" r="3"/><circle cx="18.642" cy="57.831" r="3"/><circle cx="14.413" cy="54.491" r="3"/><circle cx="10.892" cy="50.411" r="3"/><circle cx="8.207" cy="45.739" r="3"/><circle cx="6.455" cy="40.643" r="3"/><circle cx="5.699" cy="35.307" r="3"/><circle cx="5.966" cy="29.924" r="3"/><circle cx="7.247" cy="24.69" r="3"/><circle cx="9.495" cy="19.792" r="3"/><circle cx="12.63" cy="15.409" r="3"/><circle cx="16.538" cy="11.697" r="3"/><circle cx="21.077" cy="8.793" r="3"/><circle cx="26.084" cy="6.8" r="3"/><circle cx="31.378" cy="5.791" r="3"/><!--<circle cx="36.767" cy="5.802" r="3"/>--><line x1="36.767" y1="5.802" x2="36.767" y2="0" stroke="red" stroke-width="3"/></g><circle id="rotary-button-TL" cx="34.016" cy="34.015" r="28.347" class="knob-inlay"/></svg>
-            <span id="tooltip-TL" class="tooltiptext ttl"></span>
-            <label id="label-knob-xposition" class="label-controlpane">POSICIÓN</label>
-			<label id="label-knob-xposition-1" class="label-controlpane">-</label>
-			<label id="label-knob-xposition-2" class="label-controlpane">+</label>
-            <svg xmlns="http://www.w3.org/2000/svg" id="knob-XPOS" width="68.031" height="68.031" x="0" y="0" class="knob-type-b" cursor="ns-resize" version="1.1" viewBox="0 0 68.031 68.031" xml:space="preserve"><g id="knob-texture"><circle cx="42.057" cy="6.832" r="3"/><circle cx="47.056" cy="8.845" r="3"/><circle cx="51.584" cy="11.768" r="3"/><circle cx="55.477" cy="15.495" r="3"/><circle cx="58.594" cy="19.891" r="3"/><circle cx="60.822" cy="24.797" r="3"/><circle cx="62.083" cy="30.037" r="3"/><circle cx="62.328" cy="35.421" r="3"/><circle cx="61.55" cy="40.754" r="3"/><circle cx="59.778" cy="45.843" r="3"/><circle cx="57.074" cy="50.504" r="3"/><circle cx="53.536" cy="54.57" r="3"/><circle cx="49.294" cy="57.893" r="3"/><circle cx="44.499" cy="60.353" r="3"/><circle cx="39.325" cy="61.861" r="3"/><circle cx="33.959" cy="62.362" r="3"/><circle cx="28.595" cy="61.839" r="3"/><circle cx="23.428" cy="60.31" r="3"/><circle cx="18.642" cy="57.831" r="3"/><circle cx="14.413" cy="54.491" r="3"/><circle cx="10.892" cy="50.411" r="3"/><circle cx="8.207" cy="45.739" r="3"/><circle cx="6.455" cy="40.643" r="3"/><circle cx="5.699" cy="35.307" r="3"/><circle cx="5.966" cy="29.924" r="3"/><circle cx="7.247" cy="24.69" r="3"/><circle cx="9.495" cy="19.792" r="3"/><circle cx="12.63" cy="15.409" r="3"/><circle cx="16.538" cy="11.697" r="3"/><circle cx="21.077" cy="8.793" r="3"/><circle cx="26.084" cy="6.8" r="3"/><circle cx="31.378" cy="5.791" r="3"/><!--<circle cx="36.767" cy="5.802" r="3"/>--><line x1="36.767" y1="5.802" x2="36.767" y2="0" stroke="red" stroke-width="3"/></g><circle id="rotary-button-XPOS" cx="34.016" cy="34.015" r="28.347" class="knob-inlay"/></svg>
-            <span id="tooltip-XPOS" class="tooltiptext txpos"></span>
 
-            <!-- Rotaries -->
-            <label id="label-knob-CH1" class="label-knob">ESCALA</label>
-            <svg xmlns="http://www.w3.org/2000/svg" id="knob-CH1" width="250" height="227" x="0" y="0" class="knob-type-a" version="1.1" viewBox="-71.9 -67.1 250 227" xml:space="preserve"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="100%" fx="50%" fy="50%"><stop offset="25%" stop-color="#F7FF0C" stop-opacity="1"/><stop offset="100%" stop-color="#000" stop-opacity="1"/></radialGradient></defs><g fill="none" stroke="#C6C6C6" stroke-linecap="round" stroke-miterlimit="10" stroke-width="10"><path d="M-4.438 123.316c-26.111-21.195-39.451-56.086-31.476-91.092 10.422-45.735 53.55-75.53 99.091-70.344M109.491-19.074c26.696 21.117 40.426 56.4 32.363 91.799-4.844 21.257-16.748 39.068-32.684 51.526"/></g><g id="knob-texture"><circle cx="71.06" cy="-8.684" r="8"/><circle cx="82.308" cy="-4.155" r="8"/><circle cx="92.495" cy="2.421" r="8"/><circle cx="101.254" cy="10.806" r="8"/><circle cx="108.267" cy="20.697" r="8"/><circle cx="113.282" cy="31.737" r="8"/><circle cx="116.117" cy="43.526" r="8"/><circle cx="116.669" cy="55.639" r="8"/><circle cx="114.92" cy="67.637" r="8"/><circle cx="110.931" cy="79.088" r="8"/><circle cx="104.847" cy="89.576" r="8"/><circle cx="96.888" cy="98.724" r="8"/><circle cx="87.342" cy="106.2" r="8"/><circle cx="76.553" cy="111.735" r="8"/><circle cx="64.912" cy="115.128" r="8"/><circle cx="52.84" cy="116.256" r="8"/><circle cx="40.772" cy="115.079" r="8"/><circle cx="29.144" cy="111.639" r="8"/><circle cx="18.378" cy="106.062" r="8"/><circle cx="8.862" cy="98.547" r="8"/><circle cx=".94" cy="89.367" r="8"/><circle cx="-5.101" cy="78.854" r="8"/><circle cx="-9.044" cy="67.388" r="8"/><circle cx="-10.746" cy="55.383" r="8"/><circle cx="-10.144" cy="43.272" r="8"/><circle cx="-7.262" cy="31.494" r="8"/><circle cx="-2.203" cy="20.475" r="8"/><circle cx="4.85" cy="10.612" r="8"/><circle cx="13.643" cy="2.262" r="8"/><circle cx="23.856" cy="-4.273" r="8"/><circle cx="35.122" cy="-8.757" r="8"/><circle cx="47.033" cy="-11.027" r="8"/><circle cx="59.158" cy="-11.003" r="8"/></g><circle id="rotary-button-CH1" cx="52.968" cy="52.476" r="63.78" class="knob-inlay"/><circle id="c1mV" cx="109.169" cy="124.251" r="5.625" fill="#3B393E"/><circle id="c2mV" cx="131.432" cy="99.143" r="5.625" fill="#3B393E"/><circle id="c5mV" cx="143.313" cy="68.292" r="5.625" fill="#3B393E"/><circle id="c10mV" cx="142.357" cy="32.925" r="5.625" fill="#3B393E"/><circle id="c20mV" cx="129.507" cy="2.869" r="5.625" fill="#3B393E"/><circle id="c50mV" cx="108.132" cy="-19.797" r="5.625" fill="#3B393E"/><circle id="c.1V" cx="63.503" cy="-38.027" r="5.625" fill="#3B393E"/><circle id="c.2V" cx="26.642" cy="-34.706" r="5.625" fill="#3B393E"/><circle id="c.5V" cx="-5.444" cy="-17.237" r="5.625" fill="#3B393E"/><circle id="c1V" cx="-28.792" cy="11.958" r="5.625" fill="#3B393E"/><circle id="c2V" cx="-38.21" cy="47.377" r="5.625" fill="#3B393E"/><circle id="c5V" cx="-34.744" cy="76.044" r="5.625" fill="#3B393E"/><circle id="c10V" cx="-24.537" cy="101.053" r="5.625" fill="#3B393E"/><circle id="c20V" cx="-4.844" cy="123.294" r="5.625" fill="#3B393E"/><text transform="translate(7.958 153.333)">V</text><text transform="translate(70.209 153.333)">mV</text><text transform="translate(58.208 -50.667)">0.1</text><text transform="translate(12.484 -48.417)">0.2</text><text transform="translate(-25.51 -27.218)">0.5</text><text transform="translate(-47.542 6.333)">1</text><text transform="translate(-61.042 49.628)">2</text><text transform="translate(-58.792 88.834)">5</text><text transform="translate(-55.041 120.09)">10</text><text transform="translate(-34.791 144.333)">20</text><text transform="translate(116.749 -27.218)">50</text><text transform="translate(140.708 -1.167)">20</text><text transform="translate(154.96 31.968)">10</text><text transform="translate(158.708 75.087)">5</text><text transform="translate(144.282 110.584)">2</text><text transform="translate(118.999 146.583)">1</text></svg>
-            <span id="tooltip-CH1" class="tooltiptext tch1"></span>
-			
-            <label id="label-knob-CH2" class="label-knob">ESCALA</label>
-            <svg xmlns="http://www.w3.org/2000/svg" id="knob-CH2" width="243" height="225" x="0" y="0" class="knob-type-a" version="1.1" viewBox="-67.5 -67.3 243 225" xml:space="preserve"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="100%" fx="50%" fy="50%"><stop offset="25%" stop-color="#F7FF0C" stop-opacity="1"/><stop offset="100%" stop-color="#000" stop-opacity="1"/></radialGradient></defs><g fill="none" stroke="#C6C6C6" stroke-linecap="round" stroke-miterlimit="10" stroke-width="10"><path d="M-4.438 123.317C-30.55 102.122-43.89 67.231-35.914 32.224c10.422-45.734 53.55-75.53 99.092-70.343M109.49-19.073c26.695 21.117 40.428 56.399 32.365 91.799-4.845 21.258-16.75 39.068-32.684 51.527"/></g><g id="knob-texture"><circle cx="71.06" cy="-8.684" r="8"/><circle cx="82.308" cy="-4.155" r="8"/><circle cx="92.495" cy="2.421" r="8"/><circle cx="101.254" cy="10.806" r="8"/><circle cx="108.267" cy="20.697" r="8"/><circle cx="113.282" cy="31.737" r="8"/><circle cx="116.117" cy="43.526" r="8"/><circle cx="116.669" cy="55.639" r="8"/><circle cx="114.92" cy="67.637" r="8"/><circle cx="110.931" cy="79.088" r="8"/><circle cx="104.847" cy="89.576" r="8"/><circle cx="96.888" cy="98.724" r="8"/><circle cx="87.342" cy="106.2" r="8"/><circle cx="76.553" cy="111.735" r="8"/><circle cx="64.912" cy="115.128" r="8"/><circle cx="52.84" cy="116.256" r="8"/><circle cx="40.772" cy="115.079" r="8"/><circle cx="29.144" cy="111.639" r="8"/><circle cx="18.378" cy="106.062" r="8"/><circle cx="8.862" cy="98.547" r="8"/><circle cx=".94" cy="89.367" r="8"/><circle cx="-5.101" cy="78.854" r="8"/><circle cx="-9.044" cy="67.388" r="8"/><circle cx="-10.746" cy="55.383" r="8"/><circle cx="-10.144" cy="43.272" r="8"/><circle cx="-7.262" cy="31.494" r="8"/><circle cx="-2.203" cy="20.475" r="8"/><circle cx="4.85" cy="10.612" r="8"/><circle cx="13.643" cy="2.262" r="8"/><circle cx="23.856" cy="-4.273" r="8"/><circle cx="35.122" cy="-8.757" r="8"/><circle cx="47.033" cy="-11.027" r="8"/><circle cx="59.158" cy="-11.003" r="8"/></g><circle id="rotary-button-CH2" cx="52.968" cy="52.476" r="63.78" class="knob-inlay"/><circle id="c1mV" cx="109.168" cy="124.253" r="5.625" fill="#3B393E"/><circle id="c2mV" cx="131.432" cy="99.142" r="5.625" fill="#3B393E"/><circle id="c5mV" cx="143.314" cy="68.293" r="5.625" fill="#3B393E"/><circle id="c10mV" cx="142.355" cy="32.926" r="5.625" fill="#3B393E"/><circle id="c20mV" cx="129.506" cy="2.87" r="5.625" fill="#3B393E"/><circle id="c50mV" cx="108.131" cy="-19.797" r="5.625" fill="#3B393E"/><circle id="c.1V" cx="63.503" cy="-38.027" r="5.625" fill="#3B393E"/><circle id="c.2V" cx="26.642" cy="-34.705" r="5.625" fill="#3B393E"/><circle id="c.5V" cx="-5.444" cy="-17.237" r="5.625" fill="#3B393E"/><circle id="c1V" cx="-28.792" cy="11.958" r="5.625" fill="#3B393E"/><circle id="c2V" cx="-38.21" cy="47.378" r="5.625" fill="#3B393E"/><circle id="c5V" cx="-34.744" cy="76.045" r="5.625" fill="#3B393E"/><circle id="c10V" cx="-24.537" cy="101.053" r="5.625" fill="#3B393E"/><circle id="c20V" cx="-4.845" cy="123.295" r="5.625" fill="#3B393E"/><text transform="translate(7.958 153.333)">V</text><text transform="translate(70.209 153.333)">mV</text><text transform="translate(58.207 -50.668)">0.1</text><text transform="translate(12.483 -48.418)">0.2</text><text transform="translate(-25.51 -27.218)">0.5</text><text transform="translate(-47.543 6.332)">1</text><text transform="translate(-61.043 49.627)">2</text><text transform="translate(-58.793 88.833)">5</text><text transform="translate(-55.042 120.089)">10</text><text transform="translate(-34.792 144.333)">20</text><text transform="translate(116.748 -27.218)">50</text><text transform="translate(140.707 -1.168)">20</text><text transform="translate(154.959 31.967)">10</text><text transform="translate(158.707 75.087)">5</text><text transform="translate(144.281 110.583)">2</text><text transform="translate(118.998 146.583)">1</text></svg>
-            <span id="tooltip-CH2" class="tooltiptext tch2"></span>			
-            <label id="label-knob-time" class="label-knob">ESCALA</label>
-            <svg xmlns="http://www.w3.org/2000/svg" id="knob-TIME" width="254" height="252" x="0" y="0" class="knob-type-a" version="1.1" viewBox="-69.842 -100 254 252" xml:space="preserve"><defs><radialGradient id="grad1" cx="50%" cy="50%" r="100%" fx="50%" fy="50%"><stop offset="25%" stop-color="#F7FF0C" stop-opacity="1"/><stop offset="100%" stop-color="#000" stop-opacity="1"/></radialGradient></defs><g fill="none" stroke="#C6C6C6" stroke-linecap="round" stroke-miterlimit="10" stroke-width="10"><path d="M.483 95.768c-20.467-16.918-33.51-42.504-33.51-71.131 0-50.949 41.303-92.25 92.25-92.25 6.263 0 12.376.624 18.291 1.813 1.986.402 3.952.864 5.889 1.389M105.502-55.182a91.387 91.387 0 013.22 1.958c25.702 16.375 42.75 45.126 42.75 77.859 0 46.304-34.11 84.637-78.575 91.244M50.304 116.459a91.556 91.556 0 01-29.634-7.991c-.344-.157-.687-.321-1.029-.483"/></g><g id="knob-texture"><circle cx="77.315" cy="-36.616" r="8"/><circle cx="88.563" cy="-32.087" r="8"/><circle cx="98.75" cy="-25.511" r="8"/><circle cx="107.509" cy="-17.126" r="8"/><circle cx="114.522" cy="-7.235" r="8"/><circle cx="119.537" cy="3.805" r="8"/><circle cx="122.372" cy="15.594" r="8"/><circle cx="122.924" cy="27.707" r="8"/><circle cx="121.175" cy="39.705" r="8"/><circle cx="117.186" cy="51.156" r="8"/><circle cx="111.102" cy="61.645" r="8"/><circle cx="103.143" cy="70.792" r="8"/><circle cx="93.597" cy="78.268" r="8"/><circle cx="82.808" cy="83.803" r="8"/><circle cx="71.167" cy="87.196" r="8"/><circle cx="59.095" cy="88.324" r="8"/><circle cx="47.027" cy="87.147" r="8"/><circle cx="35.399" cy="83.707" r="8"/><circle cx="24.633" cy="78.13" r="8"/><circle cx="15.117" cy="70.615" r="8"/><circle cx="7.195" cy="61.435" r="8"/><circle cx="1.153" cy="50.922" r="8"/><circle cx="-2.789" cy="39.456" r="8"/><circle cx="-4.491" cy="27.451" r="8"/><circle cx="-3.889" cy="15.34" r="8"/><circle cx="-1.007" cy="3.562" r="8"/><circle cx="4.052" cy="-7.457" r="8"/><circle cx="11.105" cy="-17.32" r="8"/><circle cx="19.898" cy="-25.67" r="8"/><circle cx="30.111" cy="-32.205" r="8"/><circle cx="41.377" cy="-36.688" r="8"/><circle cx="53.288" cy="-38.959" r="8"/><circle cx="65.413" cy="-38.935" r="8"/></g><circle id="rotary-button-TIME" cx="59.223" cy="24.544" r="63.78" class="knob-inlay"/><circle id="c.1mues" cx="72.897" cy="115.887" r="5.625" fill="#3B393E"/><circle id="c.2mues" cx="102.008" cy="106.074" r="5.625" fill="#3B393E"/><circle id="c.5mues" cx="123.004" cy="91.201" r="5.625" fill="#3B393E"/><circle id="c1mues" cx="140.439" cy="68.776" r="5.625" fill="#3B393E"/><circle id="c2mues" cx="150.098" cy="41.417" r="5.625" fill="#3B393E"/><circle id="c5mues" cx="150.098" cy="9.36" r="5.625" fill="#3B393E"/><circle id="c10mues" cx="141.939" cy="-16.734" r="5.625" fill="#3B393E"/><circle id="c20mues" cx="126.212" cy="-39.234" r="5.625" fill="#3B393E"/><circle id="c50mues" cx="105.502" cy="-55.182" r="5.625" fill="#3B393E"/><circle id="c.1ms" cx="84.684" cy="-64.413" r="5.625" fill="#3B393E"/><circle id="c.2ms" cx="53.412" cy="-67.614" r="5.625" fill="#3B393E"/><circle id="c.5ms" cx="22.938" cy="-60.304" r="5.625" fill="#3B393E"/><circle id="c1ms" cx="-4.557" cy="-42.442" r="5.625" fill="#3B393E"/><circle id="c2ms" cx="-23.1" cy="-17.023" r="5.625" fill="#3B393E"/><circle id="c5ms" cx="-33.027" cy="15.991" r="5.625" fill="#3B393E"/><circle id="c10ms" cx="-30.111" cy="48.343" r="5.625" fill="#3B393E"/><circle id="c20ms" cx="-17.312" cy="75.733" r="5.625" fill="#3B393E"/><circle id="c50ms" cx=".483" cy="95.363" r="5.625" fill="#3B393E"/><circle id="c.1s" cx="19.641" cy="107.984" r="5.625" fill="#3B393E"/><circle id="c.2s" cx="50.304" cy="116.459" r="5.625" fill="#3B393E"/><text transform="translate(-44.664 -76.348)">s</text><text transform="translate(80.886 -76.348)">.1</text><text transform="translate(44.387 -81.073)">.2</text><text transform="translate(8.42 -75.173)">.5</text><text transform="translate(-22.13 -51.99)">1</text><text transform="translate(-44.664 -22.855)">2</text><text transform="translate(-57.715 16.948)">5</text><text transform="translate(-64.313 59.309)">10</text><text transform="translate(-46.914 95.769)">20</text><text transform="translate(108.376 -68.571)">50</text><text transform="translate(132.785 -48.897)">20</text><text transform="translate(151.47 -23.86)">10</text><text transform="translate(167.211 9.362)">5</text><text transform="translate(167.211 47.384)">2</text><text transform="translate(155.552 84.451)">1</text><text transform="translate(-24.38 120.902)">50</text><text transform="translate(-.49 133.277)">100</text><text transform="translate(33.865 142.503)">200</text><text transform="translate(131.886 113.477)">.5</text><text transform="translate(104.211 133.277)">.2</text><text transform="translate(69.786 142.503)">.1</text><text transform="translate(151.47 128.664)">m</text><text transform="translate(168.842 128.664)">s</text></svg>
-            <span id="tooltip-TIME" class="tooltiptext ttime"></span>
-					
+    <!-- Video con audio en el medio -->
+    <video controls class="video-with-audio">
+        <source src="IntroHios.mp4" type="video/mp4">
+        Tu navegador no soporta este video.
+    </video>
 
-            <label id="label-CH1-AC" class="label-controlpane">DC</label>
-            <button id="button-CH1-AC" class="soft-button">AC</button>
-            <button id="button-CH1-GND" class="soft-button">GND</button>
-			
-            <label id="label-CH2-AC" class="label-controlpane">DC</label>
-            <button id="button-CH2-AC" class="soft-button">AC</button>
-            <button id="button-CH2-GND" class="soft-button">GND</button>
-            <button id="button-CH2-INV" class="soft-button">INV</button>
-
-            <!-- <label id="label-hold-off" class="label-controlpane">HOLD<br />OFF</label>
-            <button id="button-hold-off" disabled title="Nicht verfügbar" class="soft-button">ON</button>
-            <button id="button-ZINP" disabled title="Nicht verfügbar" class="soft-button">Z-INP</button>
-			-->
-            <div id="trigger-pane">
-                <label id="label-trigger">DISPARO</label>
-                <button id="button-trigger-CH1" class="soft-button">CH1</button>
-                <button id="button-trigger-CH2" class="soft-button">CH2</button>
-                <button id="button-trigger-LINE" class="soft-button" disabled
-                    title="Netzfrequenz nicht verfügbar">NIVEL</button>
-                <button id="button-trigger-EXT" class="soft-button">DUAL</button>
-                <button id="button-trigger-AC" class="soft-button">AC</button>
-                <button id="button-trigger-DC" class="soft-button">DC</button>
-                <button id="button-trigger-LF" class="soft-button" disabled
-                    title="Tiefpasskopplung nicht verfügbar">PEND</button>
-            </div>   
-			
-            <div id="input-pane">
-                <label id="label-input-XINP" class="label-input"></label>
-                <label id="label-input-CH1" class="label-input">CH1</label>
-                <div id="button-input-CH1" class="channel"></div>
-                <label id="label-input-inputs" class="label-input"></label>
-                <label id="label-input-impedanz" class="label-input"></label>
-                <label id="label-input-maxvoltage" class="label-input"></label>
-				
-                <label id="label-input-CH2" class="label-input">CH2</label>
-                <div id="button-input-CH2" class="channel"></div>
-                <!--
-				<label id="label-input-EXT" class="label-input">EXT.TRIG / Z-INP</label>
-                <div id="button-input-EXT" class="channel"></div>-->
-            </div>
-        </div>
+    <!-- Sección principal -->
+    <div class="hero-section">
+        <p>Simulador De Osciloscopio Para Estudiantes</p>
+        <!-- Botón de Simulación -->
+        <button class="explore-button" onclick="location.href='compensacion.html';">Simulación</button>
     </div>
-    <div class="container">
-        <div id="function-generator">
-            <center>
-                <label>Pontificia Universidad Javeriana<br>Simulador de generador de funciones</label>
-            </center>
-            <br><br><br>
-            <div class="display">
-                <form>
-                    <div class="input-wrapper">
-                        <label class="display-text">Frecuencia</label>
-                        <input id="frequency-value" class="display-text" type="number" value="400" min="0" step="1" />
-                        <select id="frequency-unit" class="display-text">
-                            <option value="0">Hz</option>
-                            <option value="3">kHz</option>
-                            <option value="6">MHz</option>
-                        </select>
-                    </div>
-                    <div class="input-wrapper">
-                        <label class="display-text">Amplitud</label>
-                        <input id="amplitude-value" class="display-text" type="number" value="5" min="0" step="0.01" />
-                        <select id="amplitude-unit" class="display-text">
-                            <option value="-3">mVp</option>
-                            <option value="0">Vp</option>
-                        </select>
-                    </div>
-                    <div class="input-wrapper">
-                        <label class="display-text">Offset</label>
-                        <input id="offset-value" class="display-text" type="number" value="0" step="0.01" />
-                        <select id="offset-unit" class="display-text">
-                            <option value="-3">mVDC</option>
-                            <option value="0">VDC</option>
-                        </select>
-                    </div>
-                    <div class="input-wrapper">
-                        <label class="display-text">Desfase</label>
-                        <input id="phase-shift-value" class="display-text" type="number" value="0" min="0" max="359" step="1" />
-                        <select id="phase-shift-unit" class="display-text">
-                            <option value="0">°</option>
-                        </select>
-                    </div>
-                    <div class="input-wrapper">
-                        <label class="display-text">Simetría</label>
-                        <input id="symmetry-value" class="display-text" type="number" value="0" min="0" max="100" step="1" />
-                        <select id="symmetry-unit" class="display-text">
-                            <option value="0">%</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="controls">
-                <div id="function-selector">
-                    <button id="sinus-fun" class="button active" style="color: black;">
-                        <svg width="1.5vw" height="1vw" viewBox="0 0 20 15"><path fill="transparent" stroke="#000" d="M1 8c3-7 5.5-7 8.5 0S15 15 18 8"/></svg>
-                        Seno
-                    </button>
-                    <button id="rectangle-fun" class="button" style="color: black;">
-                        <svg width="1.5vw" height="1vw" viewBox="0 0 20 12"><path fill="transparent" stroke="#000" d="M0 8V0h8v8h8V0"/></svg>
-                        Cuadrada
-                    </button>
-                    <button id="triangle-fun" class="button" style="color: black;">
-                        <svg width="1.5vw" height="1vw" viewBox="0 0 30 12"><path fill="transparent" stroke="#000" d="M0 8l6-8 6 8 6-8 6 8"/></svg>
-                        Triángulo
-                    </button>
-                    <button id="saw-tooth-fun" class="button" style="color: black;">
-                        <svg width="1.5vw" height="1vw" viewBox="0 0 20 12"><path fill="transparent" stroke="#000" d="M0 8l8-8v8l8-8v8"/></svg>
-                        Rampa
-                    </button>
-                </div>
-                <div id="channels">
-                    <div id="channels-outputs" class="row-wrapper">
-                        <div id="fun-channel-ch1" class="channel"></div>
-                        <div id="fun-channel-ch2" class="channel"></div>
-                        <div id="fun-channel-ch3" class="channel"></div>
-                    </div>
-                    <div id="channels-button" class="row-wrapper">
-                        <button id="fun-ch1" class="button active" style="color: black;">CH1</button>
-                        <button id="fun-ch2" class="button" style="color: black;">CH2</button>
-                        <button id="fun-ch3" class="button" style="color: black;">SYNC</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div id="function-multimeter">
-            <center> <label>Pontificia Universidad Javeriana<br>Simulador de Multímetro</label></center>
-            <br><br><br>
-            <div class="displayM">
-                <form>
-					<center>					
-					<label class="displayM-text">Periodo: <span id="display-period">0.000</span> ms</label><br> 
-                    <label class="displayM-text">Voltaje RMS_AC: <span id="display-rms-voltage">0.00</span> V</label><br>
-					<label class="displayM-text">Voltaje RMS_DC: <span id="display-offset">0.00</span> V</label><br>
-                    <label class="displayM-text">Voltaje RMS_TOTAL: <span id="display-rms-total-voltage">0.00</span> V</label>
-					<p>F:<span id="display-frequency">0</span> Hz, A: <span id="display-amplitude">0</span> V, D: <span id="display-phaseshift">0</span>°</p>
-					</center>
-				</form>
-            </div>
-        </div>
-    </div>
-	<br><br><br>
-	<!--
-	<div class="footer">
-        <div class="javeriana-logo">
-                <img src="losmejoresparaelmundo.png" alt="Logo LosMejoresParaElMundo" class="logo-losmejoresparaelmundo">
-        </div>
-        <div class="vertical-line"></div>
-        <div class="social-icons">
-            <a href="https://www.facebook.com/david.orozco.050103/" target="_blank"><img src="facebook-icon.png" alt="Facebook"></a>
-            <a href="https://twitter.com/DavidO_05" target="_blank"><img src="twitter-icon.png" alt="Twitter"></a>
-            <a href="https://www.instagram.com/david_orozco_05" target="_blank"><img src="instagram-icon.png" alt="Instagram"></a>
-            <a href="https://www.youtube.com/channel/UCM3z6_OjaLBf43cNrc2AX9Q" target="_blank"><img src="youtube-icon.png" alt="YouTube"></a>
-            <a href="https://www.linkedin.com/in/david-orozco-12a168164/" target="_blank"><img src="linkedin-icon.png" alt="LinkedIn"></a>
-        </div>
-    </div>-->
-	
-	<!-- Pie de página -->
+    <!-- Pie de página -->
     <footer>
-        <p style="color: white;">&copy; 2024 HIOS. Todos los derechos reservados.</p>
+		<img src="losmejoresparaelmundo_white.png" alt="Imagen de ejemplo" class="image-left">
+        <p>&copy; 2024 HIOS. Todos los derechos reservados.</p>
     </footer>
-	
-<script type="text/javascript" src="main1.js"></script>
+
 </body>
 </html>
