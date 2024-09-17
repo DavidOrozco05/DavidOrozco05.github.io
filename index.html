@@ -249,6 +249,22 @@
 			color:green;
         }
     </style>
+    <script>
+        function setActiveLink() {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            this.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', setActiveLink);
+            });
+
+            document.querySelector('nav a[href="file:///D:/Users/JaverDavid/Downloads/Tesis_Interfaz2/Calibracion1.html"]').classList.add('active');
+        });
+    </script>
 </head>	
     
 
@@ -279,7 +295,18 @@
     </div>
     <noscript>You need to enable JavaScript to run this app</noscript>
 	<!-- Encabezado con enlaces de navegación -->
-    
+    <header>
+        <h1>HIOS</h1>
+        <nav>
+            <a href="file:///D:/Users/JaverDavid/Downloads/Tesis_Interfaz2/inicio.html">Inicio</a>
+            <a href="file:///D:/Users/JaverDavid/Downloads/Tesis_Interfaz2/Calibracion1.html" class="active">Simulador</a>
+            <a href="file:///D:/Users/JaverDavid/Downloads/Tesis_Interfaz2/Presentacion.html">Acerca de</a>
+            <a href="file:///D:/Users/JaverDavid/Downloads/Tesis_Interfaz2/Contactanos.htmlzz">Contáctanos</a>
+        </nav>
+        <img src="logo_javeriana_white.png" alt="Imagen de ejemplo" class="image-right">
+        <img src="logo_400_white.png" alt="Imagen de ejemplo" class="image-right1">
+    </header>
+	
 	<br>
 		
     <div id="device">		
