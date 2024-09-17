@@ -5,15 +5,256 @@
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Simulador de Osciloscopio</title>
+	<title>Simulador de Osciloscopio</title>
 	<link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" type="text/css" href="main1.css">
+	
+	<style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            text-align: center;
+			background-image: url(background.jpg);
+			background-repeat: repeat;
+        }
+
+        .image-container {
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            width: 35%;
+            height: auto;
+            border: 2px solid transparent;
+        }
+
+        .knob-container {
+            margin-top: 10px;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-weight: bold;
+			
+        }
+
+        input[type="range"] {
+            width: 40%;
+            cursor: pointer;
+        }
+
+        /* Estilo para el video de fondo */
+        .video-background {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			z-index: -2;
+		}
+
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.6); /* Capa negra con 50% de opacidad */
+			z-index: -1;
+		}
+
+        header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.6);
+			margin-top:0px;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            position: relative;
+            z-index: 10;
+        }
+
+        nav {
+            display: flex;
+            margin-left: 50px;
+            animation: bounceInDown 2s ease;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            padding: 5px;
+        }
+
+        nav a.active, nav a:hover {
+            color: #ffd700;
+        }
+
+        .image-right {
+            position: absolute;
+            right: 300px;
+            top: 0px;
+            max-width: 10%;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        .image-right1 {
+            position: absolute;
+            right: 225px;
+            top: 5px;
+            max-width: 3.5%;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        .content {
+            margin-top: 80px;
+        }
+
+        @keyframes typingEffect {
+            from { width: 0; }
+            to { width: 43.5%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        .typed-text {
+            display: inline-block;
+            border-right: 3px solid #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            animation: typingEffect 5s steps(100) 0.5s forwards, blink 0.5s step-end infinite alternate;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .justified-text {
+            margin-top: 0px;
+            text-align: left;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .justified-text .note {
+            color: yellow;
+			font-weight: bold;
+        }
+
+        .justified-text .no-compensate {
+            color: red;
+            font-weight: bold;
+			font-size: 20px;
+        }
+
+        .justified-text .yes-compensate {
+            color: #65FF17;
+            font-weight: bold;
+			font-size: 20px;
+        }
+		
+		.justified-text .seleccionar {
+            color: #03A5FF;
+            font-weight: bold;
+        }
+		
+		/* Botón de simulación estilo burbuja */
+        .explore-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 15px 30px;
+            border: 2px solid rgba(3, 165, 255, 5);
+            border-radius: 50px;
+            font-size: 15px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 5;
+            margin-top: 5px; /* Ajusta la distancia entre el texto y el botón */
+        }
+
+        .explore-button:hover {
+            background-color: rgba(3, 165, 255, 0.25);
+        }
+
+        @keyframes bounceInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(20px);
+            }
+            80% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bubbleEffect {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+        }
+		footer {
+            width: 110%;
+            text-align: center;
+            padding: 5px 0; /* Más angosta */
+            background-color: rgba(0, 0, 0, 0.8);
+            font-size: 14px;
+			color:green;
+        }
+    </style>
 </head>	
     
 
 <body>
-	<header>
-        <div class="top-bar"></div> <!-- Franja horizontal #2C5697 -->
+	<!--<header>
+        <div class="top-bar"></div> <!-- Franja horizontal #2C5697 
         <div class="logo-container">
             <div class="javeriana-logo">
                 <img src="logo_javeriana.png" alt="Logo Javeriana" class="logo-image">
@@ -31,12 +272,15 @@
 			<p class="small-font">By: David Santiago Orozco López<br> Jairo Alberto Hurtado Londoño Ph. D.<br> Ing. Alejandro Castro Martínez</p>
 			</div>
     </header>
+	
+	
     <div class="welcome-bar">
         <p>¡Bienvenido al simulador de osciloscopio! Esta herramienta te permite visualizar y analizar señales en tiempo real.</p>
     </div>
     <noscript>You need to enable JavaScript to run this app</noscript>
-	
-	<br><br><br>
+	<!-- Encabezado con enlaces de navegación -->
+    
+	<br>
 		
     <div id="device">		
         <div id="display-section">
@@ -281,19 +525,19 @@
             <br><br><br>
             <div class="displayM">
                 <form>
-					<center>
-					<label class="displayM-text">Periodo: <span id="display-period">0.000000</span> s</label><br> 
+					<center>					
+					<label class="displayM-text">Periodo: <span id="display-period">0.000</span> ms</label><br> 
                     <label class="displayM-text">Voltaje RMS_AC: <span id="display-rms-voltage">0.00</span> V</label><br>
 					<label class="displayM-text">Voltaje RMS_DC: <span id="display-offset">0.00</span> V</label><br>
                     <label class="displayM-text">Voltaje RMS_TOTAL: <span id="display-rms-total-voltage">0.00</span> V</label>
-					<p>F: <span id="display-frequency">0</span> Hz, A: <span id="display-amplitude">0</span> V, D: <span id="display-phaseshift">0</span>°</p>
+					<p>F:<span id="display-frequency">0</span> Hz, A: <span id="display-amplitude">0</span> V, D: <span id="display-phaseshift">0</span>°</p>
 					</center>
-                </form>
+				</form>
             </div>
         </div>
     </div>
 	<br><br><br>
-	
+	<!--
 	<div class="footer">
         <div class="javeriana-logo">
                 <img src="losmejoresparaelmundo.png" alt="Logo LosMejoresParaElMundo" class="logo-losmejoresparaelmundo">
@@ -306,7 +550,13 @@
             <a href="https://www.youtube.com/channel/UCM3z6_OjaLBf43cNrc2AX9Q" target="_blank"><img src="youtube-icon.png" alt="YouTube"></a>
             <a href="https://www.linkedin.com/in/david-orozco-12a168164/" target="_blank"><img src="linkedin-icon.png" alt="LinkedIn"></a>
         </div>
-    </div>
+    </div>-->
+	
+	<!-- Pie de página -->
+    <footer>
+        <p style="color: white;">&copy; 2024 HIOS. Todos los derechos reservados.</p>
+    </footer>
+	
 <script type="text/javascript" src="main1.js"></script>
 </body>
 </html>
