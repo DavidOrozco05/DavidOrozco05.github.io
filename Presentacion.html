@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calibración del Osciloscopio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.6);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            position: relative;
+            z-index: 10;
+        }
+
+        nav {
+            display: flex;
+            margin-left: 50px;
+            animation: bounceInDown 2s ease;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            padding: 5px;
+        }
+
+        nav a.active, nav a:hover {
+            color: #ffd700;
+        }
+
+        .image-right {
+            position: absolute;
+            right: 300px;
+            top: 0px;
+            max-width: 10%;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        .image-right1 {
+            position: absolute;
+            right: 225px;
+            top: 5px;
+            max-width: 3.5%;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        /* Estilo para el video */
+        .video-container {
+            margin-top: 55px; /* Para darle espacio debajo del header */
+            text-align: center;
+        }
+
+        .video-container video {
+            width: 100%; /* Ajustar el tamaño del video a toda la página */
+            height: auto;
+        }
+		/* Animaciones */
+        @keyframes bounceInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(20px);
+            }
+            80% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+	<script>
+        // Función para manejar la activación del enlace
+        function setActiveLink() {
+            // Eliminar la clase 'active' de todos los enlaces
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            // Añadir la clase 'active' al enlace clicado
+            this.classList.add('active');
+        }
+
+        // Añadir el evento de clic a todos los enlaces de navegación
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', setActiveLink);
+            });
+
+            // Activar el enlace de 'Inicio' por defecto
+            document.querySelector('nav a[href="Presentacion.html"]').classList.add('active');
+        });
+    </script>
+</head>
+<body>
+    <!-- Encabezado con enlaces de navegación -->
+    <header>
+        <h1>HIOS</h1>
+        <nav>
+            <a href="INICIO.html">Inicio</a>
+            <a href="Calibracion1.html">Simulador</a>
+            <a href="Presentacion.html" class="active">Acerca de</a>
+            <a href="Contactanos.html">Contáctanos</a>
+        </nav>
+        <img src="logo_javeriana_white.png" alt="Imagen de ejemplo" class="image-right">
+        <img src="logo_400_white.png" alt="Imagen de ejemplo" class="image-right1">
+    </header>
+
+    <!-- Video que aparece después del header -->
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src="Presentacion.mp4" type="video/mp4">
+            Tu navegador no soporta este video.
+        </video>
+    </div>
+
+</body>
+</html>

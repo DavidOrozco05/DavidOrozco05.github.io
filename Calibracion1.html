@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calibración del Osciloscopio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        .image-container {
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            width: 35%;
+            height: auto;
+            border: 2px solid transparent;
+        }
+
+        .knob-container {
+            margin-top: 10px;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-weight: bold;
+			
+        }
+
+        input[type="range"] {
+            width: 40%;
+            cursor: pointer;
+        }
+
+        /* Estilo para el video de fondo */
+        .video-background {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			z-index: -2;
+		}
+
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.6); /* Capa negra con 50% de opacidad */
+			z-index: -1;
+		}
+
+        header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.6);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            position: relative;
+            z-index: 10;
+        }
+
+        nav {
+            display: flex;
+            margin-left: 50px;
+            animation: bounceInDown 2s ease;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            padding: 5px;
+        }
+
+        nav a.active, nav a:hover {
+            color: #ffd700;
+        }
+
+        .image-right {
+            position: absolute;
+            right: 300px;
+            top: 0px;
+            max-width: 10%;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        .image-right1 {
+            position: absolute;
+            right: 225px;
+            top: 5px;
+            max-width: 3.5%;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        .content {
+            margin-top: 80px;
+        }
+
+        @keyframes typingEffect {
+            from { width: 0; }
+            to { width: 43.5%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        .typed-text {
+            display: inline-block;
+            border-right: 3px solid #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            animation: typingEffect 5s steps(100) 0.5s forwards, blink 0.5s step-end infinite alternate;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .justified-text {
+            margin-top: 0px;
+            text-align: left;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .justified-text .note {
+            color: yellow;
+			font-weight: bold;
+        }
+
+        .justified-text .no-compensate {
+            color: red;
+            font-weight: bold;
+			font-size: 20px;
+        }
+
+        .justified-text .yes-compensate {
+            color: #65FF17;
+            font-weight: bold;
+			font-size: 20px;
+        }
+		
+		.justified-text .seleccionar {
+            color: #03A5FF;
+            font-weight: bold;
+        }
+		
+		/* Botón de simulación estilo burbuja */
+        .explore-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 15px 30px;
+            border: 2px solid rgba(3, 165, 255, 5);
+            border-radius: 50px;
+            font-size: 15px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 5;
+            margin-top: 5px; /* Ajusta la distancia entre el texto y el botón */
+        }
+
+        .explore-button:hover {
+            background-color: rgba(3, 165, 255, 0.25);
+        }
+
+        @keyframes bounceInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(20px);
+            }
+            80% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bubbleEffect {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+        }
+    </style>
+    <script>
+        function setActiveLink() {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            this.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', setActiveLink);
+            });
+
+            document.querySelector('nav a[href="Calibracion1.html"]').classList.add('active');
+        });
+    </script>
+</head>
+<body>
+    <!-- Video de fondo -->
+    <div class="video-overlay-container">
+    <video autoplay muted loop class="video-background">
+        <source src="calibracionHios3.mp4" type="video/mp4">
+        Tu navegador no soporta videos de fondo.
+    </video>
+    <div class="overlay"></div>
+    </div>
+
+    <!-- Encabezado con enlaces de navegación -->
+    <header>
+        <h1>HIOS</h1>
+        <nav>
+            <a href="INICIO.html">Inicio</a>
+            <a href="Calibracion1.html" class="active">Simulador</a>
+            <a href="Presentacion.html">Acerca de</a>
+            <a href="Contactanos.html">Contáctanos</a>
+        </nav>
+        <img src="logo_javeriana_white.png" alt="Imagen de ejemplo" class="image-right">
+        <img src="logo_400_white.png" alt="Imagen de ejemplo" class="image-right1">
+    </header>
+
+    <!-- Contenido principal con margen superior -->
+    <div class="content">
+        <h1 class="typed-text">Compensa las puntas del osciloscopio</h1>
+        <p class="justified-text">
+			1. Antes de iniciar el uso del osciloscopio siempre debes compensar las puntas con las que vas a trabajar. <br>
+            2. <span class="note"> Nota: "</span> Recuerda que las puntas x1 <span class="no-compensate">NO</span> se compensan y las x10 <span class="yes-compensate">SI</span> deben compensarse.<span class="note"> "</span><br>
+            3. Arrastra la barra hasta que observes que las puntas del osciloscopio estén compensadas y haz clic en <span class="seleccionar">"Seleccionar"</span>.
+        </p>
+		
+		<div class="knob-container">
+            <input type="range" id="knob" min="1" max="5" value="2" oninput="updateImage()">
+			<button class="explore-button" onclick="selectImage()">Seleccionar</button>
+        </div>
+		
+        <div class="image-container" id="imageContainer">
+            <img id="currentImage" src="IMG_2d.png" alt="Imagen 1">
+        </div>
+
+        
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+		// Función para eliminar la línea después de 7 segundos
+        setTimeout(function() {
+            document.querySelector('.typed-text').style.borderRight = 'none';
+        }, 5800);  // Ajusta el tiempo según la duración de la animación de escritura
+		
+        function updateImage() {
+            const knobValue = document.getElementById("knob").value;
+            const image = document.getElementById("currentImage");
+            image.src = `IMG_${knobValue}d.png`;
+            image.alt = `Imagen ${knobValue}`;
+        }
+
+        function selectImage() {
+            const correctImage = 3;
+            const selectedImage = parseInt(document.getElementById("knob").value);
+            const messageDiv = document.getElementById("message");
+
+            if (selectedImage === correctImage) {
+                messageDiv.style.color = "#65FF17";
+                messageDiv.textContent = "¡Correcto, la punta está bien compensada! Ya puedes utilizar el osciloscopio...";
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 5000);
+			} else if (selectedImage === 1 || selectedImage === 2) {
+					messageDiv.style.color = "red";
+					messageDiv.textContent = "Compensación incorrecta. La punta está subcompensada.";
+			} else {
+					messageDiv.style.color = "red";
+					messageDiv.textContent = "Compensación incorrecta. La punta está sobrecompensada.";
+			}
+        }
+    </script>
+</body>
+</html>
