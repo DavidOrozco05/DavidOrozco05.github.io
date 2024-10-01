@@ -55,7 +55,7 @@
     padding-right: 20px;
     margin-top: 20px;
     background-color: transparent;
-	z-index: 1;	
+	z-index: 1;
 }
 
 .right-section p {
@@ -259,7 +259,7 @@ button:hover {
 }
 
 /*.footer {
-    background-color: #B4B4B4; /* Color de fondo del pie de página 
+    background-color: #B4B4B4; /* Color de fondo del pie de página
     display: flex;
     align-items: center;
     justify-content: space-between;

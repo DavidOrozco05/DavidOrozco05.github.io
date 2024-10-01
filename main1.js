@@ -896,7 +896,7 @@
 		document.getElementById('display-offset').textContent = offset;
 
 		// Calcular el periodo a partir de la frecuencia
-		const period = frequency > 0 ? 1 / frequency : 0;
+		const period = frequency > 0 ? (1 / frequency)*1000 : 0;
 		
 		// Calcular Voltaje RMS
 		const rmsVoltage = amplitude / Math.sqrt(2);
@@ -905,11 +905,16 @@
 		const rmsTotalVoltage = Math.sqrt(rmsVoltage**2 + offset**2);
 
 		// Mostrar los resultados de las operaciones en el HTML
-		document.getElementById('display-period').textContent = period.toFixed(6);
+		document.getElementById('display-period').textContent = period.toFixed(3);
 		document.getElementById('display-rms-voltage').textContent = rmsVoltage.toFixed(2);
 		document.getElementById('display-rms-total-voltage').textContent = rmsTotalVoltage.toFixed(2);
 	}
 
+    /* Añadir evento al botón "Calcular"
+    document.getElementById('calculate-btn').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevenir que el formulario se envíe
+        updateDisplayElements(); // Llamar la función de cálculo
+    });*/
     class i {
         constructor() {
             this.frequency = {
