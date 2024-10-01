@@ -65,6 +65,28 @@
 			background-color: rgba(0, 0, 0, 0.6); /* Capa negra con 50% de opacidad */
 			z-index: -1;
 		}
+		/* Fondo transparente para el mensaje y botones */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 200; /* Aparece sobre el resto */
+            flex-direction: column;
+            text-align: center;
+        }
+
+        #overlay-message {
+            font-size: 30px;
+            margin-bottom: 30px;
+            color: black;
+			font-weight: bold;
+        }
 
         header {
             display: flex;
@@ -182,16 +204,18 @@
 		/* Botón de simulación estilo burbuja */
         .explore-button {
             background-color: rgba(255, 255, 255, 0.2);
-            color: #ffffff;
+            color: black;
             padding: 15px 30px;
             border: 2px solid rgba(3, 165, 255, 5);
             border-radius: 50px;
             font-size: 15px;
             cursor: pointer;
+			animation: bubbleEffect 4s ease-in-out infinite;
             backdrop-filter: blur(10px);
             position: relative;
             z-index: 5;
             margin-top: 5px; /* Ajusta la distancia entre el texto y el botón */
+			margin-left:30px;
         }
 
         .explore-button:hover {
@@ -248,6 +272,7 @@
             font-size: 14px;
 			color:green;
         }
+		
     </style>
     <script>
         function setActiveLink() {
@@ -263,6 +288,17 @@
             });
 
             document.querySelector('nav a[href="compensacion.html"]').classList.add('active');
+        });
+		
+		// Función para ocultar el overlay
+        function hideOverlay() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Añadir eventos a los botones para ocultar el overlay
+            document.getElementById('keyboard-option').addEventListener('click', hideOverlay);
+            document.getElementById('mouse-option').addEventListener('click', hideOverlay);
         });
     </script>
 </head>	
@@ -301,12 +337,21 @@
             <a href="index.html">Inicio</a>
             <a href="compensacion.html" class="active">Simulador</a>
             <a href="acercade.html">Acerca de</a>
-            <a href="contactanos.htmlzz">Contáctanos</a>
+            <a href="contactanos.html">Contáctanos</a>
         </nav>
         <img src="logo_javeriana_white.png" alt="Imagen de ejemplo" class="image-right">
         <img src="logo_400_white.PNG" alt="Imagen de ejemplo" class="image-right1">
     </header>
 	
+    <!-- Overlay con el mensaje y botones de selección -->
+    <div id="overlay">
+        <div id="overlay-message">El simulador permite la interacción con un Mouse o con el Pad del teclado.<Br>Escoge una para continuar.</div>
+        <div class="button-container">
+			<button id="mouse-option" class="explore-button">Mouse</button>
+            <button id="keyboard-option" class="explore-button">Pad Teclado</button>
+        </div>
+    </div>
+
 	<br>
 		
     <div id="device">		
@@ -552,7 +597,10 @@
             <br><br><br>
             <div class="displayM">
                 <form>
-					<center>					
+					<center>
+					<!-- Botón para calcular 
+					<button id="calculate-btn" type="button">Actualizar Medición del canal seleccionado en el generador</button> <!-- Cambiado a type="button" 
+					<br>-->					
 					<label class="displayM-text">Periodo: <span id="display-period">0.000</span> ms</label><br> 
                     <label class="displayM-text">Voltaje RMS_AC: <span id="display-rms-voltage">0.00</span> V</label><br>
 					<label class="displayM-text">Voltaje RMS_DC: <span id="display-offset">0.00</span> V</label><br>
@@ -561,6 +609,7 @@
 					</center>
 				</form>
             </div>
+        </div>
         </div>
     </div>
 	<br><br><br>
