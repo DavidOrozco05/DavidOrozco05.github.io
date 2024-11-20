@@ -180,7 +180,7 @@
 
             // Cambia la imagen
             const image = document.getElementById("currentImage");
-            image.src = `${type}_1.png`;
+            image.src = `${type}_1.PNG`;
             image.alt = `Imagen de ${type} 1`;
             image.setAttribute('data-type', type);
 
@@ -198,7 +198,7 @@
             const type = image.getAttribute('data-type');
             const rangeInput = document.getElementById(`knob-${type}`);
             const imageNumber = rangeInput.value;
-            image.src = `${type}_${imageNumber}.png`;
+            image.src = `${type}_${imageNumber}.PNG`;
             image.alt = `Imagen de ${type} ${imageNumber}`;
         }
     </script>
