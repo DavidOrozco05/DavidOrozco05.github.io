@@ -755,31 +755,47 @@
             this.pointer.disableIndicator()
         }
         showTooltip(t) {
-            const e = document.getElementById(this.getIdOfTooltip());
-            e.style.visibility = 'visible',
-            e.innerHTML = this.pointer.getActualValue().toString()
-        }
-        hideTooltip(t) {
-            document.getElementById(this.getIdOfTooltip()).style.visibility = 'hidden'
-        }
-        getIdOfTooltip() {
-            switch (this.name) {
-            case 'rotary-button-CH1':
-                return 'tooltip-CH1';
-            case 'rotary-button-CH2':
-                return 'tooltip-CH2';
-            case 'rotary-button-TIME':
-                return 'tooltip-TIME';
-            case 'rotary-button-POS1':
-                return 'tooltip-POS1';
-            case 'rotary-button-POS2':
-                return 'tooltip-POS2';
-            case 'rotary-button-XPOS':
-                return 'tooltip-XPOS';
-            case 'rotary-button-TL':
-                return 'tooltip-TL'
-            }
-        }
+			const e = document.getElementById(this.getIdOfTooltip());
+			e.style.visibility = 'visible';
+
+			// Obtén el valor actual del knob
+			let value = this.pointer.getActualValue();
+
+			// Multiplica por 0.1 solo para los botones específicos
+			if (this.name === 'rotary-button-POS1' || this.name === 'rotary-button-POS2' || this.name === 'rotary-button-XPOS') {
+				value = (value * 0.1).toFixed(1); // Multiplica por 0.1 y limita a un decimal
+			} else {
+				value = value.toString(); // Para otros botones, solo convierte a string
+			}
+
+			e.innerHTML = value; // Muestra el valor
+		}
+
+		hideTooltip(t) {
+			// Verifica si el botón no es 'rotary-button-CH1', 'rotary-button-CH2' o 'rotary-button-TIME' antes de ocultar el tooltip
+			if (this.name !== 'rotary-button-CH1' && this.name !== 'rotary-button-CH2' && this.name !== 'rotary-button-TIME' && this.name !== 'rotary-button-POS2' && this.name !== 'rotary-button-POS1' && this.name !== 'rotary-button-XPOS') {
+				document.getElementById(this.getIdOfTooltip()).style.visibility = 'hidden';
+			}
+		}
+
+		getIdOfTooltip() {
+			switch (this.name) { 
+				case 'rotary-button-CH1':
+					return 'tooltip-CH1';
+				case 'rotary-button-CH2':
+					return 'tooltip-CH2';
+				case 'rotary-button-TIME':
+					return 'tooltip-TIME';
+				case 'rotary-button-POS1':
+					return 'tooltip-POS1';
+				case 'rotary-button-POS2':
+					return 'tooltip-POS2';
+				case 'rotary-button-XPOS':
+					return 'tooltip-XPOS';
+				case 'rotary-button-TL':
+					return 'tooltip-TL';
+			}
+		}
         fineMode() {
             if (this.pointer.getFineMode()) {
                 switch (this.type) {

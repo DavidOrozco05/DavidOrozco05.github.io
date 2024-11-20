@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .explore-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 10px 20px;
+            border: 2px solid rgba(3, 165, 255, 5);
+            border-radius: 50px;
+            font-size: 12px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: background-color 0.3s ease;
+        }
+
+        .explore-button.active {
+            background-color: rgba(3, 165, 255, 0.8);
+        }
+
+        .image-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 900px; /* Ajusta el ancho máximo de la imagen */
+            height: auto;
+            border: 2px solid transparent;
+        }
+
+        .knob-container {
+            width: 100%; /* Toma el ancho de la imagen */
+            max-width: 400px; /* Ajusta el ancho máximo para igualarlo a la imagen */
+            margin-top: 10px;
+            display: none; /* Oculta la barra por defecto */
+        }
+
+        .knob-container.active {
+            display: block; /* Muestra la barra solo cuando está activa */
+        }
+
+        .knob-container input[type="range"] {
+            width: 100%;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.6);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            position: relative;
+            z-index: 10;
+        }
+
+        nav {
+            display: flex;
+            margin-left: 50px;
+            animation: bounceInDown 2s ease;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            padding: 5px;
+        }
+
+        nav a.active, nav a:hover {
+            color: #ffd700;
+        }
+
+        .image-right {
+            position: absolute;
+            right: 300px;
+            top: 0px;
+            max-width: 10%;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        .image-right1 {
+            position: absolute;
+            right: 225px;
+            top: 5px;
+            max-width: 3.5%;
+            z-index: 10;
+            border-radius: 10px;
+        }
+    </style>
+    <script>
+        function setActiveLink() {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            this.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', setActiveLink);
+            });
+            document.querySelector('nav a[href="manual.html"]').classList.add('active');
+        });
+
+        function selectImageSet(type) {
+            // Desactiva los botones
+            document.querySelectorAll('.explore-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.getElementById(`button-${type}`).classList.add('active');
+
+            // Cambia la imagen
+            const image = document.getElementById("currentImage");
+            image.src = `${type}_1.png`;
+            image.alt = `Imagen de ${type} 1`;
+            image.setAttribute('data-type', type);
+
+            // Oculta todas las barras
+            document.querySelectorAll('.knob-container').forEach(container => {
+                container.classList.remove('active');
+            });
+
+            // Muestra la barra del tipo seleccionado
+            document.getElementById(`knob-container-${type}`).classList.add('active');
+        }
+
+        function updateImage() {
+            const image = document.getElementById("currentImage");
+            const type = image.getAttribute('data-type');
+            const rangeInput = document.getElementById(`knob-${type}`);
+            const imageNumber = rangeInput.value;
+            image.src = `${type}_${imageNumber}.png`;
+            image.alt = `Imagen de ${type} ${imageNumber}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="video-overlay-container">
+        <video autoplay muted loop class="video-background">
+            <source src="calibracionHios3.mp4" type="video/mp4">
+            Tu navegador no soporta videos de fondo.
+        </video>
+        <div class="overlay"></div>
+    </div>
+
+    <header>
+        <h1>HIOS</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="simulador.html">Simulador</a>
+            <a href="acercade.html">Acerca de</a>
+            <a href="contactanos.html">Contáctanos</a>
+            <a href="FFT.html">FFT</a>
+            <a href="Manual_Usuario.html" class="active">Ayuda</a>
+        </nav>
+        <img src="logo_javeriana_white.png" alt="Logo Javeriana" class="image-right">
+        <img src="logo_400_white.png" alt="Logo 400 años" class="image-right1">
+    </header>
+
+    <div class="container">
+        <!-- Botones a la izquierda -->
+        <div class="button-container">
+            <button id="button-osciloscopio" class="explore-button active" onclick="selectImageSet('osciloscopio')">Osciloscopio</button>
+            <button id="button-generador" class="explore-button" onclick="selectImageSet('generador')">Generador de Funciones</button>
+            <button id="button-multimetro" class="explore-button" onclick="selectImageSet('multimetro')">Multímetro</button>
+        </div>
+
+        <!-- Imagen a la derecha -->
+        <div class="image-container">
+            <img id="currentImage" src="Osciloscopio_1.png" alt="Imagen de Osciloscopio 1" data-type="osciloscopio">
+
+            <!-- Barra de desplazamiento para cada tipo -->
+            <div id="knob-container-osciloscopio" class="knob-container active">
+                <input type="range" id="knob-osciloscopio" min="1" max="13" value="1" oninput="updateImage()">
+            </div>
+            <div id="knob-container-generador" class="knob-container">
+                <input type="range" id="knob-generador" min="1" max="5" value="1" oninput="updateImage()">
+            </div>
+            <div id="knob-container-multimetro" class="knob-container">
+                <input type="range" id="knob-multimetro" min="1" max="1" value="1" oninput="updateImage()">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

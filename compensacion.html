@@ -284,12 +284,12 @@
         </p>
 		
 		<div class="knob-container">
-            <input type="range" id="knob" min="1" max="5" value="2" oninput="updateImage()">
+            <input type="range" id="knob" min="1" max="15" value="2" oninput="updateImage()">
 			<button class="explore-button" onclick="selectImage()">Seleccionar</button>
         </div>
 		
         <div class="image-container" id="imageContainer">
-            <img id="currentImage" src="IMG_2d.png" alt="Imagen 1">
+            <img id="currentImage" src="C2.jpg" alt="Imagen 1">
         </div>
 
         
@@ -306,12 +306,12 @@
         function updateImage() {
             const knobValue = document.getElementById("knob").value;
             const image = document.getElementById("currentImage");
-            image.src = `IMG_${knobValue}d.png`;
+            image.src = `C${knobValue}.jpg`;
             image.alt = `Imagen ${knobValue}`;
         }
 
         function selectImage() {
-            const correctImage = 3;
+            const correctImage = 7;
             const selectedImage = parseInt(document.getElementById("knob").value);
             const messageDiv = document.getElementById("message");
 
@@ -321,7 +321,7 @@
                 setTimeout(() => {
                     window.location.href = "simulador.html";
                 }, 5000);
-			} else if (selectedImage === 1 || selectedImage === 2) {
+			} else if (selectedImage >= 0 && selectedImage <= 6) {
 					messageDiv.style.color = "red";
 					messageDiv.textContent = "Compensación incorrecta. La punta está subcompensada.";
 			} else {

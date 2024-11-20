@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compensación de puntas del Osciloscopio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-right: 20px;
+        }
+
+        .explore-button {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 10px 20px;
+            border: 2px solid rgba(3, 165, 255, 5);
+            border-radius: 50px;
+            font-size: 12px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: background-color 0.3s ease;
+        }
+
+        .explore-button.active {
+            background-color: rgba(3, 165, 255, 0.8);
+        }
+
+        .image-container {
+            flex: 1;
+        }
+
+        .image-container img {
+            width: 80%;
+            height: auto;
+            border: 2px solid transparent;
+        }
+
+        /* Estilo para el video de fondo */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.6);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            position: relative;
+            z-index: 10;
+        }
+
+        nav {
+            display: flex;
+            margin-left: 50px;
+            animation: bounceInDown 2s ease;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            padding: 5px;
+        }
+
+        nav a.active, nav a:hover {
+            color: #ffd700;
+        }
+
+        .image-right {
+            position: absolute;
+            right: 300px;
+            top: 0px;
+            max-width: 10%;
+            z-index: 10;
+            border-radius: 10px;
+        }
+
+        .image-right1 {
+            position: absolute;
+            right: 225px;
+            top: 5px;
+            max-width: 3.5%;
+            z-index: 10;
+            border-radius: 10px;
+        }
+    </style>
+    <script>
+        function setActiveLink() {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            this.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', setActiveLink);
+            });
+            document.querySelector('nav a[href="FFT.html"]').classList.add('active');
+        });
+
+        function selectImage(num) {
+            const image = document.getElementById("currentImage");
+            image.src = `fft_${num}.jpg`;
+            image.alt = `Imagen ${num}`;
+
+            // Cambiar el estado del botón activo
+            document.querySelectorAll('.explore-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.getElementById(`button${num}`).classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <!-- Video de fondo -->
+    <div class="video-overlay-container">
+        <video autoplay muted loop class="video-background">
+            <source src="calibracionHios3.mp4" type="video/mp4">
+            Tu navegador no soporta videos de fondo.
+        </video>
+        <div class="overlay"></div>
+    </div>
+
+    <!-- Encabezado con enlaces de navegación -->
+    <header>
+        <h1>HIOS</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="simulador.html">Simulador</a>
+            <a href="acercade.html">Acerca de</a>
+            <a href="contactanos.html">Contáctanos</a>
+            <a href="FFT.html" class="active">FFT</a>
+			<a href="Manual_Usuario.html">Ayuda</a>
+        </nav>
+        <img src="logo_javeriana_white.png" alt="Imagen de ejemplo" class="image-right">
+        <img src="logo_400_white.png" alt="Imagen de ejemplo" class="image-right1">
+    </header>
+
+    <!-- Contenido principal con botones e imagen centrados -->
+    <div class="container">
+        <!-- Contenedor de botones para seleccionar imágenes -->
+        <div class="button-container">
+            <button id="button1" class="explore-button active" onclick="selectImage(1)">fft-Sen(2*π*1.25k*t)</button><br>
+            <button id="button2" class="explore-button" onclick="selectImage(2)">fft-2*Sen(2*π*25k*t)</button><br>
+            <button id="button3" class="explore-button" onclick="selectImage(3)">fft-5*Sen(2*π*500k*t)</button><br>
+            <button id="button4" class="explore-button" onclick="selectImage(4)">fft-Cuadrada(2*π*1.25k*t)</button><br>
+            <button id="button5" class="explore-button" onclick="selectImage(5)">fft-2*Cuadrada(2*π*25k*t)</button><br>
+            <button id="button6" class="explore-button" onclick="selectImage(6)">fft-5*Cuadrada(2*π*500k*t)</button>
+        </div>
+
+        <!-- Contenedor de imagen -->
+        <div class="image-container">
+            <img id="currentImage" src="fft_1.jpg" alt="Imagen 1">
+        </div>
+    </div>
+</body>
+</html>
