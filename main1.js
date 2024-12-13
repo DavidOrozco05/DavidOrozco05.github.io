@@ -764,6 +764,8 @@
 			// Multiplica por 0.1 solo para los botones específicos
 			if (this.name === 'rotary-button-POS1' || this.name === 'rotary-button-POS2' || this.name === 'rotary-button-XPOS') {
 				value = (value * 0.1).toFixed(1); // Multiplica por 0.1 y limita a un decimal
+			} else if (this.name === 'rotary-button-TL'){
+				value = (value * 0.1).toFixed(1); // Multiplica por 0.1 y limita a un decimal
 			} else {
 				value = value.toString(); // Para otros botones, solo convierte a string
 			}
@@ -773,7 +775,7 @@
 
 		hideTooltip(t) {
 			// Verifica si el botón no es 'rotary-button-CH1', 'rotary-button-CH2' o 'rotary-button-TIME' antes de ocultar el tooltip
-			if (this.name !== 'rotary-button-CH1' && this.name !== 'rotary-button-CH2' && this.name !== 'rotary-button-TIME' && this.name !== 'rotary-button-POS2' && this.name !== 'rotary-button-POS1' && this.name !== 'rotary-button-XPOS') {
+			if (this.name !== 'rotary-button-TL' && this.name !== 'rotary-button-CH1' && this.name !== 'rotary-button-CH2' && this.name !== 'rotary-button-TIME' && this.name !== 'rotary-button-POS2' && this.name !== 'rotary-button-POS1' && this.name !== 'rotary-button-XPOS') {
 				document.getElementById(this.getIdOfTooltip()).style.visibility = 'hidden';
 			}
 		}
@@ -904,7 +906,8 @@
 		const phaseshift = i.phaseshift.value.valueAsNumber || 0;
 		const amplitude = i.amplitude.value.valueAsNumber || 0;
 		const offset = i.offset.value.valueAsNumber || 0;
-
+		
+		
 		// Mostrar los valores directamente
 		document.getElementById('display-frequency').textContent = frequency;
 		document.getElementById('display-phaseshift').textContent = phaseshift;

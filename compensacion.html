@@ -278,19 +278,22 @@
     <div class="content">
         <h1 class="typed-text">Compensa las puntas del osciloscopio</h1>
         <p class="justified-text">
-			1. Antes de iniciar el uso del osciloscopio siempre debes compensar las puntas con las que vas a trabajar. <br>
+			1. Antes de iniciar el uso del osciloscopio siempre debes compensar las puntas de prueba (sonda) con las que vas a trabajar. <br>
             2. <span class="note"> Nota: "</span> Recuerda que las puntas x1 <span class="no-compensate">NO</span> se compensan y las x10 <span class="yes-compensate">SI</span> deben compensarse.<span class="note"> "</span><br>
             3. Arrastra la barra hasta que observes que las puntas del osciloscopio estén compensadas y haz clic en <span class="seleccionar">"Seleccionar"</span>.
         </p>
 		
 		<div class="knob-container">
-            <input type="range" id="knob" min="1" max="15" value="2" oninput="updateImage()">
-			<button class="explore-button" onclick="selectImage()">Seleccionar</button>
-        </div>
-		
-        <div class="image-container" id="imageContainer">
-            <img id="currentImage" src="C2.JPG" alt="Imagen 1">
-        </div>
+		  <input type="range" id="knob" min="1" max="15" oninput="updateImage()">
+		  <button class="explore-button" onclick="selectImage()">Seleccionar</button>
+		</div>
+		<div class="image-container" id="imageContainer">
+		  <img id="currentImage" src="" alt="Imagen inicial">
+		</div>
+		<div id="message" style="font-size: 1.2em; margin-top: 10px;"></div>
+
+		<audio id="correctSound" src="correcto.mp3"></audio>
+		<audio id="incorrectSound" src="incorrecto.mp3"></audio>
 
         
 
@@ -298,37 +301,70 @@
     </div>
 
     <script>
-		// Función para eliminar la línea después de 7 segundos
-        setTimeout(function() {
-            document.querySelector('.typed-text').style.borderRight = 'none';
-        }, 5800);  // Ajusta el tiempo según la duración de la animación de escritura
-		
-        function updateImage() {
-            const knobValue = document.getElementById("knob").value;
-            const image = document.getElementById("currentImage");
-            image.src = `C${knobValue}.JPG`;
-            image.alt = `Imagen ${knobValue}`;
-        }
+    // Generar un valor aleatorio del 2 al 14, excluyendo el 7
+    function getRandomValue() {
+        let value;
+        do {
+            value = Math.floor(Math.random() * (14 - 2 + 1)) + 2; // Generar entre 2 y 14
+        } while (value === 7); // Repetir si el valor es 7
+        return value;
+    }
 
-        function selectImage() {
-            const correctImage = 7;
-            const selectedImage = parseInt(document.getElementById("knob").value);
-            const messageDiv = document.getElementById("message");
+    // Inicializar el rango y la imagen con un valor aleatorio
+    document.addEventListener("DOMContentLoaded", () => {
+        const knob = document.getElementById("knob");
+        const currentImage = document.getElementById("currentImage");
+        const randomValue = getRandomValue();
 
-            if (selectedImage === correctImage) {
-                messageDiv.style.color = "#65FF17";
-                messageDiv.textContent = "¡Correcto, la punta está bien compensada! Ya puedes utilizar el osciloscopio...";
-                setTimeout(() => {
-                    window.location.href = "simulador.html";
-                }, 5000);
-			} else if (selectedImage >= 0 && selectedImage <= 6) {
-					messageDiv.style.color = "red";
-					messageDiv.textContent = "Compensación incorrecta. La punta está subcompensada.";
-			} else {
-					messageDiv.style.color = "red";
-					messageDiv.textContent = "Compensación incorrecta. La punta está sobrecompensada.";
-			}
+        knob.value = randomValue; // Asignar valor al input
+        currentImage.src = `C${randomValue}.JPG`; // Actualizar la imagen inicial
+        currentImage.alt = `Imagen ${randomValue}`;
+    });
+
+    // Función para actualizar la imagen según el rango
+    function updateImage() {
+        const knobValue = document.getElementById("knob").value;
+        const image = document.getElementById("currentImage");
+        image.src = `C${knobValue}.JPG`;
+        image.alt = `Imagen ${knobValue}`;
+    }
+
+    // Función para manejar la selección del botón
+    function selectImage() {
+        const correctImage = 7;
+        const selectedImage = parseInt(document.getElementById("knob").value);
+        const messageDiv = document.getElementById("message");
+
+        // Elementos de audio
+        const correctSound = document.getElementById("correctSound");
+        const incorrectSound = document.getElementById("incorrectSound");
+
+        if (selectedImage === correctImage) {
+            messageDiv.style.color = "#65FF17";
+            messageDiv.textContent = "¡Correcto, la punta está bien compensada! Ya puedes utilizar el osciloscopio...";
+            correctSound.play(); // Reproducir sonido correcto
+            setTimeout(() => {
+                window.location.href = "simulador.html";
+            }, 5000);
+        } else if (selectedImage >= 0 && selectedImage <= 6) {
+            messageDiv.style.color = "red";
+            messageDiv.textContent = "Compensación incorrecta. La punta está subcompensada.";
+            incorrectSound.play(); // Reproducir sonido incorrecto
+        } else {
+            messageDiv.style.color = "red";
+            messageDiv.textContent = "Compensación incorrecta. La punta está sobrecompensada.";
+            incorrectSound.play(); // Reproducir sonido incorrecto
         }
-    </script>
+    }
+
+    // Eliminar la línea de animación después de 7 segundos
+    setTimeout(() => {
+        const typedText = document.querySelector('.typed-text');
+        if (typedText) {
+            typedText.style.borderRight = 'none';
+        }
+    }, 5800); // Ajustar tiempo según la duración de la animación
+	</script>
+
 </body>
 </html>
