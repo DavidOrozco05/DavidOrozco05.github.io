@@ -19,15 +19,17 @@
 
         .container {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
+            z-index: 1;
         }
 
         .button-container {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-right: 20px;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
         .explore-button {
@@ -36,7 +38,7 @@
             padding: 10px 20px;
             border: 2px solid rgba(3, 165, 255, 5);
             border-radius: 50px;
-            font-size: 12px;
+            font-size: 14px;
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: background-color 0.3s ease;
@@ -46,12 +48,30 @@
             background-color: rgba(3, 165, 255, 0.8);
         }
 
+        .slider-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-left: 20px;
+		}
+
+		.slider {
+			writing-mode: bt-lr; /* Barra vertical */
+			-webkit-appearance: slider-vertical;
+			appearance: slider-vertical;
+			width: 8px;
+			height: 300px;
+			transform: rotate(180deg); /* Voltea la barra */
+		}
+
         .image-container {
-            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .image-container img {
-            width: 80%;
+            width: 90%;
             height: auto;
             border: 2px solid transparent;
         }
@@ -117,52 +137,78 @@
         nav a.active, nav a:hover {
             color: #ffd700;
         }
-
-        .image-right {
-            position: absolute;
-            right: 300px;
-            top: 0px;
-            max-width: 10%;
-            z-index: 10;
-            border-radius: 10px;
+		
+		.slider-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 300px;
+            justify-content: space-between;
+            position: relative;
         }
 
-        .image-right1 {
-            position: absolute;
-            right: 225px;
-            top: 5px;
-            max-width: 3.5%;
-            z-index: 10;
-            border-radius: 10px;
+        input[type="range"] {
+            writing-mode: bt-lr; /* De abajo hacia arriba */
+            -webkit-appearance: slider-vertical;
+            appearance: slider-vertical;
+            width: 10px;
+            height: 250px;
+            padding: 0;
+            margin: 0;
+			transform: rotate(180deg); /* Voltea la barra */
         }
     </style>
     <script>
-        function setActiveLink() {
-            document.querySelectorAll('nav a').forEach(link => {
-                link.classList.remove('active');
-            });
-            this.classList.add('active');
+		 let currentSignal = "sinusoidal";
+    let currentRange = [1, 6];
+
+    function selectSignal(signal) {
+        currentSignal = signal;
+        document.querySelectorAll('.explore-button').forEach(button => button.classList.remove('active'));
+        document.getElementById(`${signal}Button`).classList.add('active');
+        
+        if (signal === 'sinusoidal') {
+            document.getElementById('additionalButtonsS').style.display = 'flex';
+            document.getElementById('additionalButtonsC').style.display = 'none';
+            updateImageRange(1, 6); 
+        } else if (signal === 'cuadrada') {
+            document.getElementById('additionalButtonsS').style.display = 'none';
+            document.getElementById('additionalButtonsC').style.display = 'flex';
+            updateImageRange(16, 18); 
         }
+    }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('nav a').forEach(link => {
-                link.addEventListener('click', setActiveLink);
-            });
-            document.querySelector('nav a[href="FFT.html"]').classList.add('active');
-        });
-
-        function selectImage(num) {
+    function updateImage(value) {
+        if (value >= currentRange[0] && value <= currentRange[1]) {
             const image = document.getElementById("currentImage");
-            image.src = `fft_${num}.JPG`;
-            image.alt = `Imagen ${num}`;
-
-            // Cambiar el estado del botón activo
-            document.querySelectorAll('.explore-button').forEach(button => {
-                button.classList.remove('active');
-            });
-            document.getElementById(`button${num}`).classList.add('active');
+            image.src = `${currentSignal}_${value}.JPG`;
+            image.alt = `Imagen ${value} (${currentSignal})`;
         }
-    </script>
+    }
+
+    function updateImageRange(start, end) {
+        currentRange = [start, end];
+        document.getElementById("imageSlider").min = start;
+        document.getElementById("imageSlider").max = end;
+        document.getElementById("imageSlider").value = start;
+        updateImage(start);
+    }
+
+    function selectExclusiveButton(button, groupId) {
+        document.querySelectorAll(`#${groupId} .explore-button`).forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        if (groupId === 'additionalButtonsS') {
+            updateImageRange(button.textContent === 'Escala' ? 1 : button.textContent === 'Frecuencia' ? 7 : 12,
+                             button.textContent === 'Escala' ? 6 : button.textContent === 'Frecuencia' ? 11 : 15);
+        } else if (groupId === 'additionalButtonsC') {
+            updateImageRange(button.textContent === 'Escala' ? 16 : 19,
+                             button.textContent === 'Escala' ? 18 : 23);
+        }
+    }
+			
+	</script>
+
 </head>
 <body>
     <!-- Video de fondo -->
@@ -183,28 +229,32 @@
             <a href="acercade.html">Acerca de</a>
             <a href="contactanos.html">Contáctanos</a>
             <a href="FFT.html" class="active">FFT</a>
-			<a href="Manual_Usuario.html">Ayuda</a>
+            <a href="Manual_Usuario.html">Ayuda</a>
         </nav>
-        <img src="logo_javeriana_white.png" alt="Imagen de ejemplo" class="image-right">
-        <img src="logo_400_white.png" alt="Imagen de ejemplo" class="image-right1">
     </header>
-
-    <!-- Contenido principal con botones e imagen centrados -->
-    <div class="container">
-        <!-- Contenedor de botones para seleccionar imágenes -->
-        <div class="button-container">
-            <button id="button1" class="explore-button active" onclick="selectImage(1)">fft-Sen(2*π*1.25k*t)</button><br>
-            <button id="button2" class="explore-button" onclick="selectImage(2)">fft-2*Sen(2*π*25k*t)</button><br>
-            <button id="button3" class="explore-button" onclick="selectImage(3)">fft-5*Sen(2*π*500k*t)</button><br>
-            <button id="button4" class="explore-button" onclick="selectImage(4)">fft-Cuadrada(2*π*1.25k*t)</button><br>
-            <button id="button5" class="explore-button" onclick="selectImage(5)">fft-2*Cuadrada(2*π*25k*t)</button><br>
-            <button id="button6" class="explore-button" onclick="selectImage(6)">fft-5*Cuadrada(2*π*500k*t)</button>
-        </div>
-
-        <!-- Contenedor de imagen -->
-        <div class="image-container">
-            <img id="currentImage" src="fft_1.JPG" alt="Imagen 1">
-        </div>
+	
+	<div class="button-container">
+        <button id="sinusoidalButton" class="explore-button active" onclick="selectSignal('sinusoidal')">Sinusoidal</button>
+        <button id="cuadradaButton" class="explore-button" onclick="selectSignal('cuadrada')">Cuadrada</button>
     </div>
+
+    <!-- Contenedor principal -->
+    <div id="additionalButtonsS" class="button-container" style="display: flex; flex-direction: column; gap: 10px; margin-left: 20px;">
+        <button id="escalaButton" class="explore-button active" onclick="selectExclusiveButton(this, 'additionalButtonsS'); updateImageRange(1, 6)">Escala</button>
+        <button id="frecuenciaButton" class="explore-button" onclick="selectExclusiveButton(this, 'additionalButtonsS'); updateImageRange(7, 11)">Frecuencia</button>
+        <button id="amplitudButton" class="explore-button" onclick="selectExclusiveButton(this, 'additionalButtonsS'); updateImageRange(12, 15)">Amplitud</button>
+    </div>
+
+    <div id="additionalButtonsC" class="button-container" style="display: none; flex-direction: column; gap: 10px; margin-left: 20px;">
+        <button id="escalaButtonC" class="explore-button" onclick="selectExclusiveButton(this, 'additionalButtonsC'); updateImageRange(16, 18)">Escala</button>
+        <button id="frecuenciaButtonC" class="explore-button" onclick="selectExclusiveButton(this, 'additionalButtonsC'); updateImageRange(19, 23)">Frecuencia</button>
+    </div>
+
+    <div class="slider-container">
+        <input type="range" id="imageSlider" min="1" max="6" value="1" oninput="updateImage(this.value)">
+    </div>
+
+    <img id="currentImage" src="sinusoidal_1.JPG" alt="Imagen 1 (sinusoidal)" style="margin-left: 20px;">
+	
 </body>
 </html>
