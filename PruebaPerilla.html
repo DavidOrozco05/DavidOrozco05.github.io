@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Knob con Scroll y Táctil</title>
+<style>
+    body {
+        background-color: #f5f5f5;
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+    .knob-type-b {
+        background-color: #f0f0f0;
+        border-radius: 50%;
+        cursor: grab;
+        user-select: none;
+        transition: transform 0.05s linear;
+    }
+    .shadow circle {
+        fill: #888;
+    }
+    .knob-inlay {
+        fill: #ddd;
+        stroke: #555;
+        stroke-width: 2;
+    }
+</style>
+</head>
+<body>
+
+<h2>Perilla Interactiva (Scroll + Táctil)</h2>
+
+<svg xmlns="http://www.w3.org/2000/svg" 
+     id="knob-POS1" 
+     width="200" height="200" 
+     viewBox="0 0 68.031 68.031" 
+     class="knob-type-b"
+     xml:space="preserve">
+    <g id="knob-texture" class="shadow">
+        <circle cx="42.057" cy="6.832" r="3"/>
+        <circle cx="47.056" cy="8.845" r="3"/>
+        <circle cx="51.584" cy="11.768" r="3"/>
+        <circle cx="55.477" cy="15.495" r="3"/>
+        <circle cx="58.594" cy="19.891" r="3"/>
+        <circle cx="60.822" cy="24.797" r="3"/>
+        <circle cx="62.083" cy="30.037" r="3"/>
+        <circle cx="62.328" cy="35.421" r="3"/>
+        <circle cx="61.55" cy="40.754" r="3"/>
+        <circle cx="59.778" cy="45.843" r="3"/>
+        <circle cx="57.074" cy="50.504" r="3"/>
+        <circle cx="53.536" cy="54.57" r="3"/>
+        <circle cx="49.294" cy="57.893" r="3"/>
+        <circle cx="44.499" cy="60.353" r="3"/>
+        <circle cx="39.325" cy="61.861" r="3"/>
+        <circle cx="33.959" cy="62.362" r="3"/>
+        <circle cx="28.595" cy="61.839" r="3"/>
+        <circle cx="23.428" cy="60.31" r="3"/>
+        <circle cx="18.642" cy="57.831" r="3"/>
+        <circle cx="14.413" cy="54.491" r="3"/>
+        <circle cx="10.892" cy="50.411" r="3"/>
+        <circle cx="8.207" cy="45.739" r="3"/>
+        <circle cx="6.455" cy="40.643" r="3"/>
+        <circle cx="5.699" cy="35.307" r="3"/>
+        <circle cx="5.966" cy="29.924" r="3"/>
+        <circle cx="7.247" cy="24.69" r="3"/>
+        <circle cx="9.495" cy="19.792" r="3"/>
+        <circle cx="12.63" cy="15.409" r="3"/>
+        <circle cx="16.538" cy="11.697" r="3"/>
+        <circle cx="21.077" cy="8.793" r="3"/>
+        <circle cx="26.084" cy="6.8" r="3"/>
+        <circle cx="31.378" cy="5.791" r="3"/>
+        <circle cx="36.767" cy="5.802" r="3"/>
+    </g>
+    <circle id="rotary-button-POS1" 
+            cx="34.016" cy="34.015" 
+            r="28.347" 
+            class="knob-inlay"/>
+</svg>
+
+<script>
+    const knob = document.getElementById("knob-POS1");
+    let rotation = 0;
+    let lastY = null; // para touch
+
+    // --- Giro con rueda del mouse ---
+    knob.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        rotation += e.deltaY > 0 ? 5 : -5; // scroll abajo = horario, arriba = antihorario
+        knob.style.transform = `rotate(${rotation}deg)`;
+    });
+
+    // --- Giro táctil ---
+    knob.addEventListener("touchstart", (e) => {
+        lastY = e.touches[0].clientY;
+    });
+
+    knob.addEventListener("touchmove", (e) => {
+        const currentY = e.touches[0].clientY;
+        if (lastY !== null) {
+            const delta = currentY - lastY;
+            rotation += delta > 0 ? 3 : -3; // mover hacia abajo/arriba
+            knob.style.transform = `rotate(${rotation}deg)`;
+        }
+        lastY = currentY;
+    });
+
+    knob.addEventListener("touchend", () => {
+        lastY = null;
+    });
+</script>
+
+</body>
+</html>
