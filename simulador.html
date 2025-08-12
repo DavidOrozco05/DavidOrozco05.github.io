@@ -365,6 +365,36 @@
             // Muestra la nueva imagen
             images[currentIndex].style.display = 'block';
         });
+		
+		const knob = document.getElementById("knob-POS1");
+		let rotation = 0;
+		let lastY = null; // para touch
+
+		// --- Giro con rueda del mouse ---
+		knob.addEventListener("wheel", (e) => {
+			e.preventDefault();
+			rotation += e.deltaY > 0 ? 5 : -5; // scroll abajo = horario, arriba = antihorario
+			knob.style.transform = `rotate(${rotation}deg)`;
+		});
+
+		// --- Giro táctil ---
+		knob.addEventListener("touchstart", (e) => {
+			lastY = e.touches[0].clientY;
+		});
+
+		knob.addEventListener("touchmove", (e) => {
+			const currentY = e.touches[0].clientY;
+			if (lastY !== null) {
+				const delta = currentY - lastY;
+				rotation += delta > 0 ? 3 : -3; // mover hacia abajo/arriba
+				knob.style.transform = `rotate(${rotation}deg)`;
+			}
+			lastY = currentY;
+		});
+
+		knob.addEventListener("touchend", () => {
+			lastY = null;
+		});
     </script>
 </head>	
     
@@ -403,7 +433,7 @@
             <a href="compensacion.html" class="active">Simulador</a>
             <a href="acercade.html">Acerca de</a>
             <a href="contactanos.html">Contáctanos</a>
-			<a href="PruebaPerilla.html" >FFT</a>
+			<a href="FFT.html" >FFT</a>
 			<!--<a href="Manual_Usuario.html">Ayuda</a>-->
         </nav>
         <img src="logo_javeriana_white.png" alt="Imagen de ejemplo" class="image-right">
@@ -637,67 +667,82 @@
             <!-- Rotaries -->
             <label id="label-knob-CH1" class="label-knob">ESCALA</label>
 			<svg xmlns="http://www.w3.org/2000/svg" id="knob-CH1" width="250" height="227" x="0" y="0" class="knob-type-a" version="1.1" viewBox="-71.9 -67.1 250 227" xml:space="preserve">
-  <defs>
-    <radialGradient id="grad1" cx="50%" cy="50%" r="100%" fx="50%" fy="50%">
-      <stop offset="25%" stop-color="#F7FF0C" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="1"/>
-    </radialGradient>
-  </defs>
-  
-  <!-- Gráfica de la perilla -->
-  <g fill="none" stroke="#C6C6C6" stroke-linecap="round" stroke-miterlimit="10" stroke-width="10">
-    <path d="M-4.438 123.316c-26.111-21.195-39.451-56.086-31.476-91.092 10.422-45.735 53.55-75.53 99.091-70.344M109.491-19.074c26.696 21.117 40.426 56.4 32.363 91.799-4.844 21.257-16.748 39.068-32.684 51.526"/>
-  </g>
-
-  <!-- Perilla -->
-  <circle id="rotary-button-CH1" cx="52.968" cy="52.476" r="63.78" class="knob-inlay"/>
-
-  <!-- Botones de flechas -->
-  <g id="buttons" transform="translate(52.968, 52.476)">
-    <!-- Flecha hacia arriba -->
-    <rect id="up-button" x="-15" y="-60" width="30" height="20" rx="5" ry="5" fill="#4CAF50"/>
-    <text x="-5" y="-45" font-family="Arial" font-size="10" fill="#fff">↑</text>
-
-    <!-- Flecha hacia abajo -->
-    <rect id="down-button" x="-15" y="40" width="30" height="20" rx="5" ry="5" fill="#F44336"/>
-    <text x="-5" y="55" font-family="Arial" font-size="10" fill="#fff">↓</text>
-  </g>
-
-  <!-- Círculos de alrededor (perilla) -->
-  <circle id="c1mV" cx="109.169" cy="124.251" r="5.625" fill="#3B393E"/>
-  <circle id="c2mV" cx="131.432" cy="99.143" r="5.625" fill="#3B393E"/>
-  <circle id="c5mV" cx="143.313" cy="68.292" r="5.625" fill="#3B393E"/>
-  <circle id="c10mV" cx="142.357" cy="32.925" r="5.625" fill="#3B393E"/>
-  <circle id="c20mV" cx="129.507" cy="2.869" r="5.625" fill="#3B393E"/>
-  <circle id="c50mV" cx="108.132" cy="-19.797" r="5.625" fill="#3B393E"/>
-  <circle id="c.1V" cx="63.503" cy="-38.027" r="5.625" fill="#3B393E"/>
-  <circle id="c.2V" cx="26.642" cy="-34.706" r="5.625" fill="#3B393E"/>
-  <circle id="c.5V" cx="-5.444" cy="-17.237" r="5.625" fill="#3B393E"/>
-  <circle id="c1V" cx="-28.792" cy="11.958" r="5.625" fill="#3B393E"/>
-  <circle id="c2V" cx="-38.21" cy="47.377" r="5.625" fill="#3B393E"/>
-  <circle id="c5V" cx="-34.744" cy="76.044" r="5.625" fill="#3B393E"/>
-  <circle id="c10V" cx="-24.537" cy="101.053" r="5.625" fill="#3B393E"/>
-  <circle id="c20V" cx="-4.844" cy="123.294" r="5.625" fill="#3B393E"/>
-
-  <!-- Textos -->
-  <text transform="translate(7.958 153.333)">V</text>
-  <text transform="translate(70.209 153.333)">mV</text>
-  <text transform="translate(58.208 -50.667)">0.1</text>
-  <text transform="translate(12.484 -48.417)">0.2</text>
-  <text transform="translate(-25.51 -27.218)">0.5</text>
-  <text transform="translate(-47.542 6.333)">1</text>
-  <text transform="translate(-61.042 49.628)">2</text>
-  <text transform="translate(-58.792 88.834)">5</text>
-  <text transform="translate(-55.041 120.09)">10</text>
-  <text transform="translate(-34.791 144.333)">20</text>
-  <text transform="translate(116.749 -27.218)">50</text>
-  <text transform="translate(140.708 -1.167)">20</text>
-  <text transform="translate(154.96 31.968)">10</text>
-  <text transform="translate(158.708 75.087)">5</text>
-  <text transform="translate(144.282 110.584)">2</text>
-  <text transform="translate(118.999 146.583)">1</text>
-</svg>
-
+				<defs>
+					<radialGradient id="grad1" cx="50%" cy="50%" r="100%" fx="50%" fy="50%">
+					  <stop offset="25%" stop-color="#F7FF0C" stop-opacity="1"/>
+					  <stop offset="100%" stop-color="#000" stop-opacity="1"/>
+					</radialGradient>
+				</defs>
+				<g fill="none" stroke="#C6C6C6" stroke-linecap="round" stroke-miterlimit="10" stroke-width="10">
+					<path d="M-4.438 123.316c-26.111-21.195-39.451-56.086-31.476-91.092 10.422-45.735 53.55-75.53 99.091-70.344M109.491-19.074c26.696 21.117 40.426 56.4 32.363 91.799-4.844 21.257-16.748 39.068-32.684 51.526"/>
+				</g>
+				<g id="knob-texture">
+					<circle cx="71.06" cy="-8.684" r="8"/>
+					<circle cx="82.308" cy="-4.155" r="8"/>
+					<circle cx="92.495" cy="2.421" r="8"/>
+					<circle cx="101.254" cy="10.806" r="8"/>
+					<circle cx="108.267" cy="20.697" r="8"/>
+					<circle cx="113.282" cy="31.737" r="8"/>
+					<circle cx="116.117" cy="43.526" r="8"/>
+					<circle cx="116.669" cy="55.639" r="8"/>
+					<circle cx="114.92" cy="67.637" r="8"/>
+					<circle cx="110.931" cy="79.088" r="8"/>
+					<circle cx="104.847" cy="89.576" r="8"/>
+					<circle cx="96.888" cy="98.724" r="8"/>
+					<circle cx="87.342" cy="106.2" r="8"/>
+					<circle cx="76.553" cy="111.735" r="8"/>
+					<circle cx="64.912" cy="115.128" r="8"/>
+					<circle cx="52.84" cy="116.256" r="8"/>
+					<circle cx="40.772" cy="115.079" r="8"/>
+					<circle cx="29.144" cy="111.639" r="8"/>
+					<circle cx="18.378" cy="106.062" r="8"/>
+					<circle cx="8.862" cy="98.547" r="8"/>
+					<circle cx=".94" cy="89.367" r="8"/>
+					<circle cx="-5.101" cy="78.854" r="8"/>
+					<circle cx="-9.044" cy="67.388" r="8"/>
+					<circle cx="-10.746" cy="55.383" r="8"/>
+					<circle cx="-10.144" cy="43.272" r="8"/>
+					<circle cx="-7.262" cy="31.494" r="8"/>
+					<circle cx="-2.203" cy="20.475" r="8"/>
+					<circle cx="4.85" cy="10.612" r="8"/>
+					<circle cx="13.643" cy="2.262" r="8"/>
+					<circle cx="23.856" cy="-4.273" r="8"/>
+					<circle cx="35.122" cy="-8.757" r="8"/>
+					<circle cx="47.033" cy="-11.027" r="8"/>
+					<circle cx="59.158" cy="-11.003" r="8"/>
+				</g>
+				<circle id="rotary-button-CH1" cx="52.968" cy="52.476" r="63.78" class="knob-inlay"/>
+				<circle id="c1mV" cx="109.169" cy="124.251" r="5.625" fill="#3B393E"/>
+				<circle id="c2mV" cx="131.432" cy="99.143" r="5.625" fill="#3B393E"/>
+				<circle id="c5mV" cx="143.313" cy="68.292" r="5.625" fill="#3B393E"/>
+				<circle id="c10mV" cx="142.357" cy="32.925" r="5.625" fill="#3B393E"/>
+				<circle id="c20mV" cx="129.507" cy="2.869" r="5.625" fill="#3B393E"/>
+				<circle id="c50mV" cx="108.132" cy="-19.797" r="5.625" fill="#3B393E"/>
+				<circle id="c.1V" cx="63.503" cy="-38.027" r="5.625" fill="#3B393E"/>
+				<circle id="c.2V" cx="26.642" cy="-34.706" r="5.625" fill="#3B393E"/>
+				<circle id="c.5V" cx="-5.444" cy="-17.237" r="5.625" fill="#3B393E"/>
+				<circle id="c1V" cx="-28.792" cy="11.958" r="5.625" fill="#3B393E"/>
+				<circle id="c2V" cx="-38.21" cy="47.377" r="5.625" fill="#3B393E"/>
+				<circle id="c5V" cx="-34.744" cy="76.044" r="5.625" fill="#3B393E"/>
+				<circle id="c10V" cx="-24.537" cy="101.053" r="5.625" fill="#3B393E"/>
+				<circle id="c20V" cx="-4.844" cy="123.294" r="5.625" fill="#3B393E"/>
+				<text transform="translate(7.958 153.333)">V</text>
+				<text transform="translate(70.209 153.333)">mV</text>
+				<text transform="translate(58.208 -50.667)">.1</text>
+				<text transform="translate(12.484 -48.417)">.2</text>
+				<text transform="translate(-25.51 -27.218)">.5</text>
+				<text transform="translate(-47.542 6.333)">1</text>
+				<text transform="translate(-61.042 49.628)">2</text>
+				<text transform="translate(-58.792 88.834)">5</text>
+				<text transform="translate(-55.041 120.09)">10</text>
+				<text transform="translate(-34.791 144.333)">20</text>
+				<text transform="translate(116.749 -27.218)">50</text>
+				<text transform="translate(140.708 -1.167)">20</text>
+				<text transform="translate(154.96 31.968)">10</text>
+				<text transform="translate(158.708 75.087)">5</text>
+				<text transform="translate(144.282 110.584)">2</text>
+				<text transform="translate(118.999 146.583)">1</text>
+			</svg>
 
             <span id="tooltip-CH1" class="tooltiptext tch1" style="background: none; color:#F0D58C"></span>
 			
